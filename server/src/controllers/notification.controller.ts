@@ -1,10 +1,25 @@
 import { Request, Response } from 'express';
+import { Prisma } from '@prisma/client';
 import { prisma } from '../lib/prisma';
 import { AuthRequest } from '../middleware/auth.middleware';
 
-export const createNotification = async (userId: string, title: string, message: string, type: string = 'INFO', data?: Record<string, unknown>): Promise<void> => {
+export const createNotification = async (
+  userId: string,
+  title: string,
+  message: string,
+  type: string = 'INFO',
+  data?: Record<string, unknown>
+): Promise<void> => {
   try {
-    await prisma.notification.create({ data: { userId, title, message, type, data } });
+    await prisma.notification.create({
+      data: {
+        userId,
+        title,
+        message,
+        type,
+        data: data as Prisma.InputJsonValue | undefined,
+      },
+    });
   } catch (err) {
     console.error('Notification error:', err);
   }
@@ -41,7 +56,7 @@ export const getNotifications = async (req: AuthRequest, res: Response): Promise
 export const markAsRead = async (req: AuthRequest, res: Response): Promise<void> => {
   try {
     await prisma.notification.updateMany({
-      where: { id: req.params.id, userId: req.user!.id },
+      where: { id: req.params.id as string, userId: req.user!.id },
       data: { isRead: true },
     });
     res.json({ success: true, message: 'Notifikasi ditandai sudah dibaca' });
@@ -64,7 +79,9 @@ export const markAllAsRead = async (req: AuthRequest, res: Response): Promise<vo
 
 export const deleteNotification = async (req: AuthRequest, res: Response): Promise<void> => {
   try {
-    await prisma.notification.deleteMany({ where: { id: req.params.id, userId: req.user!.id } });
+    await prisma.notification.deleteMany({
+      where: { id: req.params.id as string, userId: req.user!.id },
+    });
     res.json({ success: true, message: 'Notifikasi dihapus' });
   } catch (err) {
     res.status(500).json({ success: false, message: 'Server error' });
