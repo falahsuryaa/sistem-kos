@@ -91,20 +91,22 @@ app.use('*', (_req, res) => {
 // Global error handler
 app.use(errorHandler);
 
-// Start server
-app.listen(PORT, async () => {
-  console.log(`\n🏠 Kos Ciparay API Server`);
-  console.log(`🚀 Running on http://localhost:${PORT}`);
-  console.log(`📊 Environment: ${process.env.NODE_ENV}`);
-  
-  try {
-    await prisma.$connect();
-    console.log('✅ Database connected');
-    startCronJobs();
-    console.log('⏰ Cron jobs started');
-  } catch (err) {
-    console.error('❌ Database connection failed:', err);
-  }
-});
+// Start server (only in non-Vercel/development environments)
+if (process.env.NODE_ENV !== 'production' || !process.env.VERCEL) {
+  app.listen(PORT, async () => {
+    console.log(`\n🏠 Kos Ciparay API Server`);
+    console.log(`🚀 Running on http://localhost:${PORT}`);
+    console.log(`📊 Environment: ${process.env.NODE_ENV}`);
+    
+    try {
+      await prisma.$connect();
+      console.log('✅ Database connected');
+      startCronJobs();
+      console.log('⏰ Cron jobs started');
+    } catch (err) {
+      console.error('❌ Database connection failed:', err);
+    }
+  });
+}
 
 export default app;
