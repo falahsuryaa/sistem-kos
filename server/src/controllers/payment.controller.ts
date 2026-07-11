@@ -174,7 +174,7 @@ export const getPayments = async (req: Request, res: Response): Promise<void> =>
   try {
     const { status, page = '1', limit = '20' } = req.query;
     const skip = (parseInt(page as string) - 1) * parseInt(limit as string);
-    const where = status ? { status: status as string } : {};
+    const where = status ? { status: status as any } : {};
 
     const [payments, total] = await Promise.all([
       prisma.payment.findMany({
@@ -224,7 +224,7 @@ export const getMyPayments = async (req: AuthRequest, res: Response): Promise<vo
 export const getPayment = async (req: Request, res: Response): Promise<void> => {
   try {
     const payment = await prisma.payment.findUnique({
-      where: { id: req.params.id },
+      where: { id: req.params.id as string },
       include: { invoice: { include: { tenant: true, room: true } } },
     });
     if (!payment) { res.status(404).json({ success: false, message: 'Pembayaran tidak ditemukan' }); return; }
@@ -236,7 +236,7 @@ export const getPayment = async (req: Request, res: Response): Promise<void> => 
 
 export const checkPaymentStatus = async (req: Request, res: Response): Promise<void> => {
   try {
-    const payment = await prisma.payment.findFirst({ where: { id: req.params.id } });
+    const payment = await prisma.payment.findFirst({ where: { id: req.params.id as string } });
     if (!payment) { res.status(404).json({ success: false, message: 'Pembayaran tidak ditemukan' }); return; }
     res.json({ success: true, data: { status: payment.status, transactionStatus: payment.transactionStatus } });
   } catch (err) {

@@ -42,7 +42,7 @@ export const getRooms = async (req: Request, res: Response): Promise<void> => {
 export const getRoom = async (req: Request, res: Response): Promise<void> => {
   try {
     const room = await prisma.room.findUnique({
-      where: { id: req.params.id },
+      where: { id: req.params.id as string },
       include: {
         facilities: { include: { facility: true } },
         tenants: { where: { isActive: true }, include: { user: { select: { email: true } } } },
@@ -74,7 +74,7 @@ export const createRoom = async (req: AuthRequest, res: Response): Promise<void>
         yearlyPrice: yearlyPrice ? parseFloat(yearlyPrice) : null,
         description,
         photos,
-        status: status || 'AVAILABLE',
+        status: (status || 'AVAILABLE') as any,
       },
     });
 
@@ -102,13 +102,13 @@ export const updateRoom = async (req: AuthRequest, res: Response): Promise<void>
     const files = req.files as Express.Multer.File[];
     const newPhotos = files?.map(f => `/uploads/${f.filename}`) || [];
 
-    const existing = await prisma.room.findUnique({ where: { id: req.params.id } });
+    const existing = await prisma.room.findUnique({ where: { id: req.params.id as string } });
     if (!existing) { res.status(404).json({ success: false, message: 'Kamar tidak ditemukan' }); return; }
 
     const photos = newPhotos.length > 0 ? [...existing.photos, ...newPhotos] : existing.photos;
 
     const room = await prisma.room.update({
-      where: { id: req.params.id },
+      where: { id: req.params.id as string },
       data: {
         ...(roomNumber && { roomNumber }),
         ...(name && { name }),
@@ -118,7 +118,7 @@ export const updateRoom = async (req: AuthRequest, res: Response): Promise<void>
         ...(monthlyPrice && { monthlyPrice: parseFloat(monthlyPrice) }),
         ...(yearlyPrice && { yearlyPrice: parseFloat(yearlyPrice) }),
         ...(description !== undefined && { description }),
-        ...(status && { status }),
+        ...(status && { status: status as any }),
         ...(isActive !== undefined && { isActive: isActive === 'true' || isActive === true }),
         photos,
       },
@@ -147,16 +147,16 @@ export const updateRoom = async (req: AuthRequest, res: Response): Promise<void>
 
 export const deleteRoom = async (req: Request, res: Response): Promise<void> => {
   try {
-    const room = await prisma.room.findUnique({ where: { id: req.params.id } });
+    const room = await prisma.room.findUnique({ where: { id: req.params.id as string } });
     if (!room) { res.status(404).json({ success: false, message: 'Kamar tidak ditemukan' }); return; }
 
-    const hasActiveTenants = await prisma.tenant.findFirst({ where: { roomId: req.params.id, isActive: true } });
+    const hasActiveTenants = await prisma.tenant.findFirst({ where: { roomId: req.params.id as string, isActive: true } });
     if (hasActiveTenants) {
       res.status(400).json({ success: false, message: 'Kamar masih memiliki penghuni aktif' });
       return;
     }
 
-    await prisma.room.update({ where: { id: req.params.id }, data: { isActive: false } });
+    await prisma.room.update({ where: { id: req.params.id as string }, data: { isActive: false } });
     res.json({ success: true, message: 'Kamar berhasil dinonaktifkan' });
   } catch (err) {
     res.status(500).json({ success: false, message: 'Server error' });
@@ -168,11 +168,11 @@ export const uploadRoomPhotos = async (req: AuthRequest, res: Response): Promise
     const files = req.files as Express.Multer.File[];
     const newPhotos = files?.map(f => `/uploads/${f.filename}`) || [];
 
-    const room = await prisma.room.findUnique({ where: { id: req.params.id } });
+    const room = await prisma.room.findUnique({ where: { id: req.params.id as string } });
     if (!room) { res.status(404).json({ success: false, message: 'Kamar tidak ditemukan' }); return; }
 
     const updated = await prisma.room.update({
-      where: { id: req.params.id },
+      where: { id: req.params.id as string },
       data: { photos: [...room.photos, ...newPhotos] },
     });
 

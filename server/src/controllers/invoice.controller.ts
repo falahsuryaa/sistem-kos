@@ -18,7 +18,7 @@ export const getInvoices = async (req: Request, res: Response): Promise<void> =>
 
     const where: Record<string, unknown> = {};
     if (status) where.status = status;
-    if (tenantId) where.tenantId = tenantId;
+    if (tenantId) where.tenantId = tenantId as string;
     if (month) where.periodMonth = parseInt(month as string);
     if (year) where.periodYear = parseInt(year as string);
 
@@ -68,7 +68,7 @@ export const getMyInvoices = async (req: AuthRequest, res: Response): Promise<vo
 export const getInvoice = async (req: AuthRequest, res: Response): Promise<void> => {
   try {
     const invoice = await prisma.invoice.findUnique({
-      where: { id: req.params.id },
+      where: { id: req.params.id as string },
       include: {
         tenant: { include: { room: true } },
         room: { include: { facilities: { include: { facility: true } } } },
@@ -121,16 +121,16 @@ export const updateInvoice = async (req: Request, res: Response): Promise<void> 
   try {
     const { status, lateFee, notes, dueDate } = req.body;
 
-    const invoice = await prisma.invoice.findUnique({ where: { id: req.params.id } });
+    const invoice = await prisma.invoice.findUnique({ where: { id: req.params.id as string } });
     if (!invoice) { res.status(404).json({ success: false, message: 'Invoice tidak ditemukan' }); return; }
 
     const late = lateFee !== undefined ? parseFloat(lateFee) : Number(invoice.lateFee);
     const totalAmount = Number(invoice.amount) + late;
 
     const updated = await prisma.invoice.update({
-      where: { id: req.params.id },
+      where: { id: req.params.id as string },
       data: {
-        ...(status && { status }),
+        ...(status && { status: status as any }),
         ...(lateFee !== undefined && { lateFee: late, totalAmount }),
         ...(notes !== undefined && { notes }),
         ...(dueDate && { dueDate: new Date(dueDate) }),
@@ -198,7 +198,7 @@ export const generateMonthlyInvoices = async (_req: Request, res: Response): Pro
 export const generateInvoicePDF = async (req: Request, res: Response): Promise<void> => {
   try {
     const invoice = await prisma.invoice.findUnique({
-      where: { id: req.params.id },
+      where: { id: req.params.id as string },
       include: {
         tenant: { include: { room: true } },
         room: true,

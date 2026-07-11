@@ -48,7 +48,7 @@ export const getMyComplaints = async (req: AuthRequest, res: Response): Promise<
 export const getComplaint = async (req: Request, res: Response): Promise<void> => {
   try {
     const complaint = await prisma.complaint.findUnique({
-      where: { id: req.params.id },
+      where: { id: req.params.id as string },
       include: { tenant: { select: { fullName: true, phone: true, room: { select: { roomNumber: true } } } } },
     });
     if (!complaint) { res.status(404).json({ success: false, message: 'Keluhan tidak ditemukan' }); return; }
@@ -68,7 +68,7 @@ export const createComplaint = async (req: AuthRequest, res: Response): Promise<
     if (!tenant) { res.status(404).json({ success: false, message: 'Data penghuni tidak ditemukan' }); return; }
 
     const complaint = await prisma.complaint.create({
-      data: { tenantId: tenant.id, title, description, category: category || 'OTHER', photos },
+      data: { tenantId: tenant.id, title, description, category: (category || 'OTHER') as any, photos },
     });
     res.status(201).json({ success: true, message: 'Keluhan berhasil diajukan', data: complaint });
   } catch (err) {
@@ -79,13 +79,13 @@ export const createComplaint = async (req: AuthRequest, res: Response): Promise<
 export const updateComplaint = async (req: AuthRequest, res: Response): Promise<void> => {
   try {
     const { status, adminNotes } = req.body;
-    const complaint = await prisma.complaint.findUnique({ where: { id: req.params.id } });
+    const complaint = await prisma.complaint.findUnique({ where: { id: req.params.id as string } });
     if (!complaint) { res.status(404).json({ success: false, message: 'Keluhan tidak ditemukan' }); return; }
 
     const updated = await prisma.complaint.update({
-      where: { id: req.params.id },
+      where: { id: req.params.id as string },
       data: {
-        ...(status && { status }),
+        ...(status && { status: status as any }),
         ...(adminNotes !== undefined && { adminNotes }),
         ...(status === 'RESOLVED' && { resolvedAt: new Date() }),
       },
@@ -95,7 +95,7 @@ export const updateComplaint = async (req: AuthRequest, res: Response): Promise<
     if (updated.tenant) {
       let title = 'Pembaruan Keluhan';
       let message = `Status keluhan Anda "${updated.title}" telah diperbarui menjadi ${status}.`;
-      
+
       if (status === 'IN_PROGRESS') {
         title = 'Keluhan Diproses';
         message = `Keluhan Anda "${updated.title}" telah diterima dan akan segera melakukan perbaikan. ${adminNotes ? 'Catatan: ' + adminNotes : ''}`;
@@ -106,7 +106,7 @@ export const updateComplaint = async (req: AuthRequest, res: Response): Promise<
         title = 'Keluhan Ditutup';
         message = `Keluhan Anda "${updated.title}" telah ditutup.`;
       }
-      
+
       await createNotification(updated.tenant.userId, title, message, 'INFO');
     }
 
@@ -118,7 +118,7 @@ export const updateComplaint = async (req: AuthRequest, res: Response): Promise<
 
 export const deleteComplaint = async (req: Request, res: Response): Promise<void> => {
   try {
-    await prisma.complaint.delete({ where: { id: req.params.id } });
+    await prisma.complaint.delete({ where: { id: req.params.id as string } });
     res.json({ success: true, message: 'Keluhan berhasil dihapus' });
   } catch (err) {
     res.status(500).json({ success: false, message: 'Server error' });

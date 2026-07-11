@@ -22,7 +22,7 @@ export const getAnnouncements = async (req: Request, res: Response): Promise<voi
 
 export const getAnnouncement = async (req: Request, res: Response): Promise<void> => {
   try {
-    const announcement = await prisma.announcement.findUnique({ where: { id: req.params.id } });
+    const announcement = await prisma.announcement.findUnique({ where: { id: req.params.id as string } });
     if (!announcement) { res.status(404).json({ success: false, message: 'Pengumuman tidak ditemukan' }); return; }
     res.json({ success: true, data: announcement });
   } catch (err) {
@@ -46,7 +46,7 @@ export const updateAnnouncement = async (req: Request, res: Response): Promise<v
   try {
     const { title, content, category, isPinned, isActive, expiresAt } = req.body;
     const announcement = await prisma.announcement.update({
-      where: { id: req.params.id },
+      where: { id: req.params.id as string },
       data: {
         ...(title && { title }),
         ...(content && { content }),
@@ -64,7 +64,7 @@ export const updateAnnouncement = async (req: Request, res: Response): Promise<v
 
 export const deleteAnnouncement = async (req: Request, res: Response): Promise<void> => {
   try {
-    await prisma.announcement.delete({ where: { id: req.params.id } });
+    await prisma.announcement.delete({ where: { id: req.params.id as string } });
     res.json({ success: true, message: 'Pengumuman berhasil dihapus' });
   } catch (err) {
     res.status(500).json({ success: false, message: 'Server error' });

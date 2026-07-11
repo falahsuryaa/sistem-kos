@@ -25,7 +25,7 @@ export const getExpenses = async (req: Request, res: Response): Promise<void> =>
 
 export const getExpense = async (req: Request, res: Response): Promise<void> => {
   try {
-    const expense = await prisma.expense.findUnique({ where: { id: req.params.id } });
+    const expense = await prisma.expense.findUnique({ where: { id: req.params.id as string } });
     if (!expense) { res.status(404).json({ success: false, message: 'Data tidak ditemukan' }); return; }
     res.json({ success: true, data: expense });
   } catch (err) {
@@ -37,7 +37,7 @@ export const createExpense = async (req: Request, res: Response): Promise<void> 
   try {
     const { title, amount, category, date, description } = req.body;
     const expense = await prisma.expense.create({
-      data: { title, amount: parseFloat(amount), category: category || 'OTHER', date: new Date(date), description },
+      data: { title, amount: parseFloat(amount), category: (category || 'OTHER') as any, date: new Date(date), description },
     });
     res.status(201).json({ success: true, message: 'Pengeluaran berhasil ditambahkan', data: expense });
   } catch (err) {
@@ -49,11 +49,11 @@ export const updateExpense = async (req: Request, res: Response): Promise<void> 
   try {
     const { title, amount, category, date, description } = req.body;
     const expense = await prisma.expense.update({
-      where: { id: req.params.id },
+      where: { id: req.params.id as string },
       data: {
         ...(title && { title }),
         ...(amount && { amount: parseFloat(amount) }),
-        ...(category && { category }),
+        ...(category && { category: category as any }),
         ...(date && { date: new Date(date) }),
         ...(description !== undefined && { description }),
       },
@@ -66,7 +66,7 @@ export const updateExpense = async (req: Request, res: Response): Promise<void> 
 
 export const deleteExpense = async (req: Request, res: Response): Promise<void> => {
   try {
-    await prisma.expense.delete({ where: { id: req.params.id } });
+    await prisma.expense.delete({ where: { id: req.params.id as string } });
     res.json({ success: true, message: 'Pengeluaran berhasil dihapus' });
   } catch (err) {
     res.status(500).json({ success: false, message: 'Server error' });

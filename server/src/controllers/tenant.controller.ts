@@ -11,7 +11,7 @@ export const getTenants = async (req: Request, res: Response): Promise<void> => 
 
     const where: Record<string, unknown> = {};
     if (isActive !== undefined) where.isActive = isActive === 'true';
-    if (roomId) where.roomId = roomId;
+    if (roomId) where.roomId = roomId as string;
     if (search) where.OR = [
       { fullName: { contains: search as string, mode: 'insensitive' } },
       { phone: { contains: search as string } },
@@ -45,7 +45,7 @@ export const getTenants = async (req: Request, res: Response): Promise<void> => 
 
 export const getTenant = async (req: AuthRequest, res: Response): Promise<void> => {
   try {
-    const { id } = req.params;
+    const id = req.params.id as string;
     const tenant = await prisma.tenant.findUnique({
       where: { id },
       include: {
@@ -102,7 +102,7 @@ export const createTenant = async (req: AuthRequest, res: Response): Promise<voi
     const tenant = await prisma.tenant.create({
       data: {
         userId, roomId: roomId || null,
-        fullName, nik, phone, email, gender,
+        fullName, nik, phone, email, gender: gender as any,
         birthDate: birthDate ? new Date(birthDate) : null,
         address, photo, ktpPhoto, qrCode: '',
         checkInDate: new Date(checkInDate),
@@ -143,7 +143,7 @@ export const updateTenant = async (req: AuthRequest, res: Response): Promise<voi
     const photo = files?.photo?.[0] ? `/uploads/${files.photo[0].filename}` : undefined;
     const ktpPhoto = files?.ktpPhoto?.[0] ? `/uploads/${files.ktpPhoto[0].filename}` : undefined;
 
-    const existing = await prisma.tenant.findUnique({ where: { id: req.params.id } });
+    const existing = await prisma.tenant.findUnique({ where: { id: req.params.id as string } });
     if (!existing) { res.status(404).json({ success: false, message: 'Penghuni tidak ditemukan' }); return; }
 
     // Handle room change
@@ -158,12 +158,12 @@ export const updateTenant = async (req: AuthRequest, res: Response): Promise<voi
     }
 
     const tenant = await prisma.tenant.update({
-      where: { id: req.params.id },
+      where: { id: req.params.id as string },
       data: {
         ...(fullName && { fullName }),
         ...(phone && { phone }),
         ...(email && { email }),
-        ...(gender && { gender }),
+        ...(gender && { gender: gender as any }),
         ...(birthDate && { birthDate: new Date(birthDate) }),
         ...(address !== undefined && { address }),
         ...(checkInDate && { checkInDate: new Date(checkInDate) }),
@@ -187,11 +187,11 @@ export const updateTenant = async (req: AuthRequest, res: Response): Promise<voi
 
 export const deleteTenant = async (req: Request, res: Response): Promise<void> => {
   try {
-    const tenant = await prisma.tenant.findUnique({ where: { id: req.params.id } });
+    const tenant = await prisma.tenant.findUnique({ where: { id: req.params.id as string } });
     if (!tenant) { res.status(404).json({ success: false, message: 'Penghuni tidak ditemukan' }); return; }
 
     await prisma.tenant.update({
-      where: { id: req.params.id },
+      where: { id: req.params.id as string },
       data: { isActive: false, checkOutDate: new Date() },
     });
 
@@ -220,7 +220,7 @@ export const getTenantHistory = async (_req: Request, res: Response): Promise<vo
 
 export const getPublicVerifyTenant = async (req: Request, res: Response): Promise<void> => {
   try {
-    const { id } = req.params;
+    const id = req.params.id as string;
     const tenant = await prisma.tenant.findUnique({
       where: { id },
       include: {
@@ -228,7 +228,7 @@ export const getPublicVerifyTenant = async (req: Request, res: Response): Promis
       },
     });
     if (!tenant) { res.status(404).json({ success: false, message: 'Data penyewa tidak ditemukan' }); return; }
-    
+
     res.json({
       success: true,
       data: {

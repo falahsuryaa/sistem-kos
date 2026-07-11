@@ -5,7 +5,7 @@ export const getBookings = async (req: Request, res: Response): Promise<void> =>
   try {
     const { status, page = '1', limit = '20' } = req.query;
     const skip = (parseInt(page as string) - 1) * parseInt(limit as string);
-    const where = status ? { status: status as string } : {};
+    const where = status ? { status: status as any } : {};
     const [bookings, total] = await Promise.all([
       prisma.booking.findMany({
         where,
@@ -25,7 +25,7 @@ export const getBookings = async (req: Request, res: Response): Promise<void> =>
 export const getBooking = async (req: Request, res: Response): Promise<void> => {
   try {
     const booking = await prisma.booking.findUnique({
-      where: { id: req.params.id },
+      where: { id: req.params.id as string },
       include: { room: true },
     });
     if (!booking) { res.status(404).json({ success: false, message: 'Booking tidak ditemukan' }); return; }
@@ -56,8 +56,8 @@ export const updateBookingStatus = async (req: Request, res: Response): Promise<
   try {
     const { status, adminNotes } = req.body;
     const booking = await prisma.booking.update({
-      where: { id: req.params.id },
-      data: { status, adminNotes, processedAt: new Date() },
+      where: { id: req.params.id as string },
+      data: { status: status as any, adminNotes, processedAt: new Date() },
     });
     res.json({ success: true, message: 'Status booking diperbarui', data: booking });
   } catch (err) {
@@ -67,7 +67,7 @@ export const updateBookingStatus = async (req: Request, res: Response): Promise<
 
 export const deleteBooking = async (req: Request, res: Response): Promise<void> => {
   try {
-    await prisma.booking.delete({ where: { id: req.params.id } });
+    await prisma.booking.delete({ where: { id: req.params.id as string } });
     res.json({ success: true, message: 'Booking dihapus' });
   } catch (err) {
     res.status(500).json({ success: false, message: 'Server error' });
