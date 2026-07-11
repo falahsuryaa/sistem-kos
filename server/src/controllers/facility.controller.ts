@@ -24,7 +24,7 @@ export const updateFacility = async (req: Request, res: Response): Promise<void>
   try {
     const { name, icon, description, isActive } = req.body;
     const facility = await prisma.facility.update({
-      where: { id: req.params.id },
+      where: { id: req.params.id as string },
       data: {
         ...(name && { name }),
         ...(icon !== undefined && { icon }),
@@ -40,7 +40,7 @@ export const updateFacility = async (req: Request, res: Response): Promise<void>
 
 export const deleteFacility = async (req: Request, res: Response): Promise<void> => {
   try {
-    await prisma.facility.update({ where: { id: req.params.id }, data: { isActive: false } });
+    await prisma.facility.update({ where: { id: req.params.id as string }, data: { isActive: false } });
     res.json({ success: true, message: 'Fasilitas dihapus' });
   } catch (err) {
     res.status(500).json({ success: false, message: 'Server error' });
