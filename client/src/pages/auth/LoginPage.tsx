@@ -25,11 +25,6 @@ export default function LoginPage() {
     }
   };
 
-  const fillDemo = (role: 'admin' | 'tenant') => {
-    if (role === 'admin') { setEmail('admin@kosciparay.com'); setPassword('admin123'); }
-    else { setEmail('budi@example.com'); setPassword('tenant123'); }
-  };
-
   return (
     <div className="min-h-screen flex">
       {/* Left Panel - Decorative */}
@@ -129,27 +124,6 @@ export default function LoginPage() {
                 )}
               </button>
             </form>
-
-            {/* Demo accounts */}
-            <div className="mt-6 pt-6 border-t border-slate-200 dark:border-slate-700">
-              <p className="text-xs text-slate-500 dark:text-slate-400 text-center mb-3">Demo Akun (Klik untuk mengisi)</p>
-              <div className="grid grid-cols-2 gap-2">
-                <button
-                  type="button"
-                  onClick={() => fillDemo('admin')}
-                  className="py-2 px-3 bg-blue-50 dark:bg-blue-900/20 text-blue-600 dark:text-blue-400 text-xs font-medium rounded-lg hover:bg-blue-100 dark:hover:bg-blue-900/40 transition-colors"
-                >
-                  👤 Admin Demo
-                </button>
-                <button
-                  type="button"
-                  onClick={() => fillDemo('tenant')}
-                  className="py-2 px-3 bg-emerald-50 dark:bg-emerald-900/20 text-emerald-600 dark:text-emerald-400 text-xs font-medium rounded-lg hover:bg-emerald-100 dark:hover:bg-emerald-900/40 transition-colors"
-                >
-                  🏠 Penyewa Demo
-                </button>
-              </div>
-            </div>
           </div>
 
           <p className="text-center mt-6 text-sm text-slate-500 dark:text-slate-400">
