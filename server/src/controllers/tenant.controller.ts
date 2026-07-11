@@ -3,6 +3,7 @@ import QRCode from 'qrcode';
 import { prisma } from '../lib/prisma';
 import { AuthRequest } from '../middleware/auth.middleware';
 import { createNotification } from './notification.controller';
+import { uploadFileToBlob } from '../lib/blob';
 
 export const getTenants = async (req: Request, res: Response): Promise<void> => {
   try {
@@ -93,8 +94,8 @@ export const createTenant = async (req: AuthRequest, res: Response): Promise<voi
   try {
     const { userId, roomId, fullName, nik, phone, email, gender, birthDate, address, checkInDate, emergencyContact, emergencyPhone, notes } = req.body;
     const files = req.files as { [fieldname: string]: Express.Multer.File[] };
-    const photo = files?.photo?.[0] ? `/uploads/${files.photo[0].filename}` : undefined;
-    const ktpPhoto = files?.ktpPhoto?.[0] ? `/uploads/${files.ktpPhoto[0].filename}` : undefined;
+    const photo = files?.photo?.[0] ? await uploadFileToBlob(files.photo[0]) : undefined;
+    const ktpPhoto = files?.ktpPhoto?.[0] ? await uploadFileToBlob(files.ktpPhoto[0]) : undefined;
 
     const existingNik = await prisma.tenant.findUnique({ where: { nik } });
     if (existingNik) { res.status(409).json({ success: false, message: 'NIK sudah terdaftar' }); return; }
@@ -140,8 +141,8 @@ export const updateTenant = async (req: AuthRequest, res: Response): Promise<voi
   try {
     const { fullName, phone, email, gender, birthDate, address, checkInDate, checkOutDate, isActive, roomId, emergencyContact, emergencyPhone, notes } = req.body;
     const files = req.files as { [fieldname: string]: Express.Multer.File[] };
-    const photo = files?.photo?.[0] ? `/uploads/${files.photo[0].filename}` : undefined;
-    const ktpPhoto = files?.ktpPhoto?.[0] ? `/uploads/${files.ktpPhoto[0].filename}` : undefined;
+    const photo = files?.photo?.[0] ? await uploadFileToBlob(files.photo[0]) : undefined;
+    const ktpPhoto = files?.ktpPhoto?.[0] ? await uploadFileToBlob(files.ktpPhoto[0]) : undefined;
 
     const existing = await prisma.tenant.findUnique({ where: { id: req.params.id as string } });
     if (!existing) { res.status(404).json({ success: false, message: 'Penghuni tidak ditemukan' }); return; }

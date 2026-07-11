@@ -2,6 +2,7 @@ import { Request, Response } from 'express';
 import { prisma } from '../lib/prisma';
 import { AuthRequest } from '../middleware/auth.middleware';
 import { createNotification } from './notification.controller';
+import { uploadFilesToBlob } from '../lib/blob';
 
 export const getComplaints = async (req: Request, res: Response): Promise<void> => {
   try {
@@ -62,7 +63,7 @@ export const createComplaint = async (req: AuthRequest, res: Response): Promise<
   try {
     const { title, description, category } = req.body;
     const files = req.files as Express.Multer.File[];
-    const photos = files?.map(f => `/uploads/${f.filename}`) || [];
+    const photos = files && files.length > 0 ? await uploadFilesToBlob(files) : [];
 
     const tenant = await prisma.tenant.findUnique({ where: { userId: req.user!.id } });
     if (!tenant) { res.status(404).json({ success: false, message: 'Data penghuni tidak ditemukan' }); return; }

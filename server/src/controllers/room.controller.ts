@@ -1,6 +1,7 @@
 import { Request, Response } from 'express';
 import { prisma } from '../lib/prisma';
 import { AuthRequest } from '../middleware/auth.middleware';
+import { uploadFilesToBlob } from '../lib/blob';
 
 export const getRooms = async (req: Request, res: Response): Promise<void> => {
   try {
@@ -59,7 +60,7 @@ export const createRoom = async (req: AuthRequest, res: Response): Promise<void>
   try {
     const { roomNumber, name, floor, size, capacity, monthlyPrice, yearlyPrice, description, facilityIds, status } = req.body;
     const files = req.files as Express.Multer.File[];
-    const photos = files?.map(f => `/uploads/${f.filename}`) || [];
+    const photos = files && files.length > 0 ? await uploadFilesToBlob(files) : [];
 
     const existing = await prisma.room.findUnique({ where: { roomNumber } });
     if (existing) { res.status(409).json({ success: false, message: 'Nomor kamar sudah ada' }); return; }
@@ -100,7 +101,7 @@ export const updateRoom = async (req: AuthRequest, res: Response): Promise<void>
   try {
     const { roomNumber, name, floor, size, capacity, monthlyPrice, yearlyPrice, description, facilityIds, status, isActive } = req.body;
     const files = req.files as Express.Multer.File[];
-    const newPhotos = files?.map(f => `/uploads/${f.filename}`) || [];
+    const newPhotos = files && files.length > 0 ? await uploadFilesToBlob(files) : [];
 
     const existing = await prisma.room.findUnique({ where: { id: req.params.id as string } });
     if (!existing) { res.status(404).json({ success: false, message: 'Kamar tidak ditemukan' }); return; }
@@ -166,7 +167,7 @@ export const deleteRoom = async (req: Request, res: Response): Promise<void> => 
 export const uploadRoomPhotos = async (req: AuthRequest, res: Response): Promise<void> => {
   try {
     const files = req.files as Express.Multer.File[];
-    const newPhotos = files?.map(f => `/uploads/${f.filename}`) || [];
+    const newPhotos = files && files.length > 0 ? await uploadFilesToBlob(files) : [];
 
     const room = await prisma.room.findUnique({ where: { id: req.params.id as string } });
     if (!room) { res.status(404).json({ success: false, message: 'Kamar tidak ditemukan' }); return; }
