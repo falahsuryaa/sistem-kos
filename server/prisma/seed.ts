@@ -22,12 +22,12 @@ async function main() {
   await prisma.user.deleteMany();
 
   // Create Admin user
-  const adminPassword = await bcrypt.hash('admin123', 12);
+  const adminPassword = await bcrypt.hash('miftahul123', 12);
   const admin = await prisma.user.create({
     data: {
-      email: 'admin@kosciparay.com',
+      email: 'miftahul@admin.com',
       password: adminPassword,
-      name: 'Administrator',
+      name: 'Miftahul',
       role: Role.ADMIN,
       phone: '08123456789',
       isActive: true,
@@ -158,7 +158,7 @@ async function main() {
   console.log('✅ Announcements seeded');
 
   console.log('\n🎉 Seeding complete!');
-  console.log('📧 Admin login: admin@kosciparay.com / admin123');
+  console.log('📧 Admin login: miftahul@admin.com / miftahul123');
   console.log('📧 Tenant login: budi@example.com / tenant123');
 }
 
