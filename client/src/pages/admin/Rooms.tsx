@@ -256,7 +256,7 @@ export default function AdminRooms() {
                 {/* Photo */}
                 <div className="h-40 bg-gradient-to-br from-slate-100 to-slate-200 dark:from-slate-700 dark:to-slate-800 relative overflow-hidden">
                   {room.photos && room.photos.length > 0 ? (
-                    <img src={`http://localhost:5000${room.photos[0]}`} alt={room.name} className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-300" />
+                    <img src={`${import.meta.env.VITE_API_URL?.replace('/api', '') || ''}${room.photos[0]}`} alt={room.name} className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-300" />
                   ) : (
                     <div className="w-full h-full flex items-center justify-center">
                       <BedDouble className="w-12 h-12 text-slate-300 dark:text-slate-600" />
@@ -346,7 +346,7 @@ export default function AdminRooms() {
               {viewRoom.photos && viewRoom.photos.length > 0 && (
                 <div className="grid grid-cols-2 gap-2">
                   {viewRoom.photos.slice(0, 4).map((photo, idx) => (
-                    <img key={idx} src={`http://localhost:5000${photo}`} alt="" className="h-28 w-full object-cover rounded-lg" />
+                    <img key={idx} src={`${import.meta.env.VITE_API_URL?.replace('/api', '') || ''}${photo}`} alt="" className="h-28 w-full object-cover rounded-lg" />
                   ))}
                 </div>
               )}

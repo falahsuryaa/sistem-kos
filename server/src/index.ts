@@ -49,7 +49,7 @@ app.use(cors({
     // Izinkan request tanpa origin (misal dari Postman, server-to-server, curl)
     if (!origin) return callback(null, true);
 
-    if (allowedOrigins.includes(origin)) {
+    if (process.env.NODE_ENV === 'development' || allowedOrigins.includes(origin)) {
       return callback(null, true);
     }
 
