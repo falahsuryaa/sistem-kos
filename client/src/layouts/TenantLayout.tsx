@@ -56,7 +56,7 @@ export default function TenantLayout() {
       )}
 
       {/* Topbar */}
-      <header className="sticky top-0 z-10 bg-white dark:bg-slate-800 border-b border-slate-200 dark:border-slate-700 shadow-sm">
+      <header className="sticky top-0 z-30 bg-white dark:bg-slate-800 border-b border-slate-200 dark:border-slate-700 shadow-sm">
         <div className="max-w-7xl mx-auto px-4 py-3 flex items-center gap-3">
           {/* Mobile Menu Toggle (Left-aligned) */}
           <button

@@ -153,9 +153,16 @@ export const updateTenant = async (req: AuthRequest, res: Response): Promise<voi
       if (roomId) await prisma.room.update({ where: { id: roomId }, data: { status: 'OCCUPIED' } });
     }
 
-    // Handle checkout
-    if (isActive === 'false' || isActive === false) {
-      if (existing.roomId) await prisma.room.update({ where: { id: existing.roomId }, data: { status: 'AVAILABLE' } });
+    // Handle checkout and sync active state to User
+    if (isActive !== undefined) {
+      const activeState = isActive === 'true' || isActive === true;
+      if (!activeState && existing.roomId) {
+        await prisma.room.update({ where: { id: existing.roomId }, data: { status: 'AVAILABLE' } });
+      }
+      await prisma.user.update({
+        where: { id: existing.userId },
+        data: { isActive: activeState },
+      });
     }
 
     const tenant = await prisma.tenant.update({
@@ -194,6 +201,11 @@ export const deleteTenant = async (req: Request, res: Response): Promise<void> =
     await prisma.tenant.update({
       where: { id: req.params.id as string },
       data: { isActive: false, checkOutDate: new Date() },
+    });
+
+    await prisma.user.update({
+      where: { id: tenant.userId },
+      data: { isActive: false },
     });
 
     if (tenant.roomId) {
