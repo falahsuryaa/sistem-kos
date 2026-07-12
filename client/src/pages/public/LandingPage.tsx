@@ -39,7 +39,16 @@ export default function LandingPage() {
     },
   });
 
+  const { data: reviewsData } = useQuery({
+    queryKey: ['public-reviews'],
+    queryFn: async () => {
+      const { data } = await api.get('/reviews');
+      return data;
+    },
+  });
+
   const rooms = roomsData?.data || [];
+  const reviews = reviewsData?.data || [];
 
   const handleBooking = async (e: React.FormEvent) => {
     e.preventDefault();
@@ -72,7 +81,7 @@ export default function LandingPage() {
           </div>
 
           <div className="hidden md:flex items-center gap-7">
-            {[['Beranda', 'hero'], ['Kamar', 'rooms'], ['Fasilitas', 'facilities'], ['Lokasi', 'location'], ['FAQ', 'faq']].map(([label, id]) => (
+            {[['Beranda', 'hero'], ['Kamar', 'rooms'], ['Fasilitas', 'facilities'], ['Ulasan', 'testimonials'], ['Lokasi', 'location'], ['FAQ', 'faq']].map(([label, id]) => (
               <button key={id} onClick={() => scrollTo(id)} className="text-sm font-semibold text-slate-700 dark:text-slate-300 hover:text-emerald-600 dark:hover:text-emerald-400 transition-colors">
                 {label}
               </button>
@@ -95,7 +104,7 @@ export default function LandingPage() {
         {/* Mobile Menu */}
         {mobileMenu && (
           <div className="md:hidden border-t border-slate-200 dark:border-slate-800 bg-white dark:bg-slate-950 px-4 py-3 space-y-1 animate-slide-in">
-            {[['Beranda', 'hero'], ['Kamar', 'rooms'], ['Fasilitas', 'facilities'], ['Lokasi', 'location'], ['FAQ', 'faq']].map(([label, id]) => (
+            {[['Beranda', 'hero'], ['Kamar', 'rooms'], ['Fasilitas', 'facilities'], ['Ulasan', 'testimonials'], ['Lokasi', 'location'], ['FAQ', 'faq']].map(([label, id]) => (
               <button key={id} onClick={() => scrollTo(id)} className="block w-full text-left px-3 py-2.5 rounded-lg text-sm font-semibold text-slate-700 dark:text-slate-300 hover:bg-slate-100 dark:hover:bg-slate-900">
                 {label}
               </button>
@@ -325,6 +334,60 @@ export default function LandingPage() {
         </div>
       </section>
 
+      {/* Testimonials Section */}
+      {reviews.length > 0 && (
+        <section id="testimonials" className="py-20 bg-white dark:bg-slate-950 border-t border-slate-200 dark:border-slate-900 transition-colors duration-200">
+          <div className="max-w-7xl mx-auto px-4">
+            <div className="text-center mb-14">
+              <span className="text-sm font-bold text-emerald-600 dark:text-emerald-400 uppercase tracking-widest">Testimoni</span>
+              <h2 className="text-3xl lg:text-4xl font-extrabold text-slate-900 dark:text-white mt-2 mb-4">Ulasan Dari Penghuni</h2>
+              <p className="text-sm text-slate-500 dark:text-slate-400 max-w-xl mx-auto font-semibold">
+                Dengarkan langsung ulasan dan pengalaman tinggal dari para penghuni Kos Cikawung yang telah terverifikasi.
+              </p>
+            </div>
+
+            <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+              {reviews.map((r: any) => (
+                <div key={r.id} className="bg-slate-50 dark:bg-slate-900 rounded-3xl p-6 border border-slate-200/60 dark:border-slate-800 shadow-sm flex flex-col justify-between hover:shadow-md transition-all hover:scale-[1.01]">
+                  <div>
+                    <div className="flex gap-1 mb-4">
+                      {[1, 2, 3, 4, 5].map((star) => (
+                        <Star
+                          key={star}
+                          className={`w-4 h-4 ${
+                            star <= r.rating ? 'text-amber-500 fill-amber-500' : 'text-slate-350 dark:text-slate-700'
+                          }`}
+                        />
+                      ))}
+                    </div>
+                    <p className="text-sm text-slate-750 dark:text-slate-300 italic font-semibold leading-relaxed mb-6">
+                      "{r.comment}"
+                    </p>
+                  </div>
+                  <div className="flex items-center gap-3.5 pt-4 border-t border-slate-200/50 dark:border-slate-800">
+                    {r.tenant?.photo ? (
+                      <img
+                        src={r.tenant.photo.startsWith('http') ? r.tenant.photo : `${import.meta.env.VITE_API_URL?.replace('/api', '') || ''}${r.tenant.photo}`}
+                        alt={r.tenant.fullName}
+                        className="w-10 h-10 rounded-xl object-cover border border-slate-200 dark:border-slate-700"
+                      />
+                    ) : (
+                      <div className="w-10 h-10 rounded-xl bg-emerald-100 dark:bg-emerald-950/40 text-emerald-700 dark:text-emerald-450 font-bold flex items-center justify-center text-sm shadow-sm flex-shrink-0">
+                        {r.tenant?.fullName?.charAt(0).toUpperCase()}
+                      </div>
+                    )}
+                    <div>
+                      <h4 className="text-sm font-bold text-slate-900 dark:text-white">{r.tenant?.fullName}</h4>
+                      <p className="text-xs text-slate-500 dark:text-slate-400 mt-0.5">Penghuni {r.tenant?.room?.name || 'Kamar'}</p>
+                    </div>
+                  </div>
+                </div>
+              ))}
+            </div>
+          </div>
+        </section>
+      )}
+
       {/* FAQ */}
       <section id="faq" className="py-20 bg-slate-50 dark:bg-slate-900/30 border-t border-b border-slate-100 dark:border-slate-900">
         <div className="max-w-3xl mx-auto px-4">
@@ -387,6 +450,7 @@ export default function LandingPage() {
               <div className="space-y-3 font-semibold text-slate-400">
                 <button onClick={() => scrollTo('hero')} className="block hover:text-white transition-colors">Beranda Utama</button>
                 <button onClick={() => scrollTo('rooms')} className="block hover:text-white transition-colors">Daftar Kamar</button>
+                <button onClick={() => scrollTo('testimonials')} className="block hover:text-white transition-colors">Ulasan Penghuni</button>
                 <button onClick={() => scrollTo('faq')} className="block hover:text-white transition-colors">FAQ Pertanyaan</button>
                 <Link to="/login" className="block hover:text-white transition-colors">Halaman Login</Link>
               </div>

@@ -18,6 +18,7 @@ import { expenseRouter } from './routes/expense.routes';
 import { dashboardRouter } from './routes/dashboard.routes';
 import { bookingRouter } from './routes/booking.routes';
 import { facilityRouter } from './routes/facility.routes';
+import { reviewRouter } from './routes/review.routes';
 import { startCronJobs } from './services/cron.service';
 import { errorHandler } from './middleware/errorHandler';
 import { prisma } from './lib/prisma';
@@ -106,6 +107,7 @@ app.use('/api/reports', reportRouter);
 app.use('/api/expenses', expenseRouter);
 app.use('/api/bookings', bookingRouter);
 app.use('/api/facilities', facilityRouter);
+app.use('/api/reviews', reviewRouter);
 
 // 404 handler
 app.use('*', (_req, res) => {

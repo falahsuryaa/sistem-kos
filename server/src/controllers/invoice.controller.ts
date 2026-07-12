@@ -311,6 +311,13 @@ export const generateInvoicePDF = async (req: Request, res: Response): Promise<v
 
     <button class="print-btn" onclick="window.print()">Cetak / Simpan PDF</button>
   </div>
+  <script>
+    window.onload = function() {
+      setTimeout(function() {
+        window.print();
+      }, 550);
+    };
+  </script>
 </body>
 </html>`;
 

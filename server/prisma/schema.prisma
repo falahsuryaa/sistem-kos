@@ -175,6 +175,7 @@ model Tenant {
   invoices      Invoice[]
   complaints    Complaint[]
   bookings      Booking[]
+  reviews       Review[]
 
   @@map("tenants")
 }
@@ -329,4 +330,18 @@ model AuditLog {
   user       User?    @relation(fields: [userId], references: [id], onDelete: SetNull)
 
   @@map("audit_logs")
+}
+
+model Review {
+  id        String   @id @default(uuid())
+  tenantId  String
+  rating    Int
+  comment   String
+  isActive  Boolean  @default(true)
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+
+  tenant    Tenant   @relation(fields: [tenantId], references: [id], onDelete: Cascade)
+
+  @@map("reviews")
 }
