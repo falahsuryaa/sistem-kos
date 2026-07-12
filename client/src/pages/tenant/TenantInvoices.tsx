@@ -143,7 +143,7 @@ export default function TenantInvoices() {
                     {inv.status === 'PAID' && (
                       <div className="mt-2 text-xs">
                         <a
-                          href={`${import.meta.env.VITE_API_URL}/invoices/${inv.id}/pdf`}
+                          href={`${import.meta.env.VITE_API_URL}/invoices/${inv.id}/pdf?token=${localStorage.getItem('accessToken')}`}
                           target="_blank"
                           rel="noopener noreferrer"
                           className="text-emerald-600 dark:text-emerald-400 hover:underline font-semibold inline-flex items-center gap-1.5"

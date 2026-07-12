@@ -9,12 +9,18 @@ export interface AuthRequest extends Request {
 export const authenticate = async (req: AuthRequest, res: Response, next: NextFunction): Promise<void> => {
   try {
     const authHeader = req.headers.authorization;
-    if (!authHeader || !authHeader.startsWith('Bearer ')) {
+    let token = '';
+
+    if (authHeader && authHeader.startsWith('Bearer ')) {
+      token = authHeader.substring(7);
+    } else if (req.query.token) {
+      token = req.query.token as string;
+    }
+
+    if (!token) {
       res.status(401).json({ success: false, message: 'Token tidak ditemukan' });
       return;
     }
-
-    const token = authHeader.substring(7);
     const decoded = jwt.verify(token, process.env.JWT_SECRET!) as { id: string; email: string; role: string; name: string };
 
     const user = await prisma.user.findUnique({

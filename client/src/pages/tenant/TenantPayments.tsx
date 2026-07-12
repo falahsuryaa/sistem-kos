@@ -67,6 +67,18 @@ export default function TenantPayments() {
                       <p className="text-xs text-slate-500 mt-0.5">Metode: {p.paymentType}</p>
                     )}
                     <p className="text-xs text-slate-400 mt-0.5">{new Date(p.createdAt).toLocaleString('id-ID')}</p>
+                    {p.status === 'SETTLEMENT' && p.invoice && (
+                      <div className="mt-2 text-xs">
+                        <a
+                          href={`${import.meta.env.VITE_API_URL}/invoices/${p.invoice.id}/pdf?token=${localStorage.getItem('accessToken')}`}
+                          target="_blank"
+                          rel="noopener noreferrer"
+                          className="text-emerald-600 dark:text-emerald-400 hover:underline font-semibold inline-flex items-center gap-1.5"
+                        >
+                          📄 Cetak Nota Pembayaran
+                        </a>
+                      </div>
+                    )}
                   </div>
                   <div className="text-right">
                     <p className={`text-lg font-bold ${p.status === 'SETTLEMENT' ? 'text-emerald-600 dark:text-emerald-400' : 'text-slate-900 dark:text-white'}`}>
