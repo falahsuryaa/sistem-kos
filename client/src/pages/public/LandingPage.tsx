@@ -294,7 +294,7 @@ export default function LandingPage() {
               style={{ border: 0 }}
               allowFullScreen
               loading="lazy"
-              className="w-full rounded-2xl grayscale dark:invert transition-all"
+              className="w-full rounded-2xl transition-all"
             />
           </div>
           <div className="mt-8 grid grid-cols-1 md:grid-cols-3 gap-6 text-slate-800 dark:text-slate-200">
