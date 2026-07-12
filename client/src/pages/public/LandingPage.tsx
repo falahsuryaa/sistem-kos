@@ -62,7 +62,7 @@ export default function LandingPage() {
   return (
     <div className="min-h-screen bg-white dark:bg-slate-950 text-slate-900 dark:text-slate-100 transition-colors duration-200">
       {/* Navbar */}
-      <nav className="sticky top-0 z-50 bg-white/95 dark:bg-slate-950/95 backdrop-blur-xl border-b border-slate-200 dark:border-slate-850">
+      <nav className="sticky top-0 z-50 bg-white/95 dark:bg-slate-950/95 backdrop-blur-xl border-b border-slate-200 dark:border-slate-800">
         <div className="max-w-7xl mx-auto px-4 py-3.5 flex items-center justify-between">
           <div className="flex items-center gap-2.5">
             <div className="w-10 h-10 rounded-xl bg-emerald-600 dark:bg-emerald-500 flex items-center justify-center shadow-md">
@@ -81,7 +81,7 @@ export default function LandingPage() {
 
           <div className="flex items-center gap-3">
             <button onClick={() => setDarkMode(!darkMode)} className="p-2 rounded-lg text-slate-500 hover:text-slate-900 hover:bg-slate-100 dark:text-slate-400 dark:hover:text-yellow-400 dark:hover:bg-slate-900 transition-all">
-              {darkMode ? <Sun className="w-5.5 h-5.5" /> : <Moon className="w-5.5 h-5.5" />}
+              {darkMode ? <Sun className="w-5 h-5" /> : <Moon className="w-5 h-5" />}
             </button>
             <Link to="/login" className="hidden md:flex btn-primary text-sm font-semibold px-5 py-2.5 shadow-sm">
               Masuk
@@ -94,7 +94,7 @@ export default function LandingPage() {
 
         {/* Mobile Menu */}
         {mobileMenu && (
-          <div className="md:hidden border-t border-slate-200 dark:border-slate-850 bg-white dark:bg-slate-950 px-4 py-3 space-y-1 animate-slide-in">
+          <div className="md:hidden border-t border-slate-200 dark:border-slate-800 bg-white dark:bg-slate-950 px-4 py-3 space-y-1 animate-slide-in">
             {[['Beranda', 'hero'], ['Kamar', 'rooms'], ['Fasilitas', 'facilities'], ['Lokasi', 'location'], ['FAQ', 'faq']].map(([label, id]) => (
               <button key={id} onClick={() => scrollTo(id)} className="block w-full text-left px-3 py-2.5 rounded-lg text-sm font-semibold text-slate-700 dark:text-slate-300 hover:bg-slate-100 dark:hover:bg-slate-900">
                 {label}
@@ -109,34 +109,34 @@ export default function LandingPage() {
       <section id="hero" className="relative overflow-hidden bg-slate-50 dark:bg-slate-950 border-b border-slate-200 dark:border-slate-900 py-20 lg:py-28 transition-colors duration-200">
         <div className="absolute inset-0 opacity-[0.03] dark:opacity-[0.05]" style={{ backgroundImage: 'url("data:image/svg+xml,%3Csvg width=\'60\' height=\'60\' viewBox=\'0 0 60 60\' xmlns=\'http://www.w3.org/2000/svg\'%3E%3Cpath d=\'M54 48c-2 0-3 1-4 2v4c0 1-1 2-2 2h-4c-1 0-2-1-2-2v-4c-1-1-2-2-4-2h-4c-1 0-2 1-2 2v4c0 1-1 2-2 2H4c-1 0-2-1-2-2v-4c0-1-1-2-2-2h-2c-1 0-2 1-2 2v4c0 1 1 2 2 2h10c1 0 2-1 2-2v-4c0-1 1-2 2-2h4c1 0 2 1 2 2v4c0 1 1 2 2 2h10c1 0 2-1 2-2v-4c0-1 1-2 2-2h4c1 0 2 1 2 2v4c0 1 1 2 2 2h4c1 0 2-1 2-2v-4c0-1 1-2 2-2z\' fill=\'%23000000\' fill-opacity=\'1\' fill-rule=\'evenodd\'/%3E%3C/svg%3E")' }} />
         <div className="relative max-w-7xl mx-auto px-4 text-center">
-          <div className="inline-flex items-center gap-2 bg-emerald-50 dark:bg-emerald-950/40 rounded-full px-4.5 py-1.5 mb-6 border border-emerald-100 dark:border-emerald-900/30">
-            <CheckCircle className="w-4.5 h-4.5 text-emerald-600 dark:text-emerald-400" />
+          <div className="inline-flex items-center gap-2 bg-emerald-50 dark:bg-emerald-950/40 rounded-full px-4 py-1.5 mb-6 border border-emerald-100 dark:border-emerald-900/30">
+            <CheckCircle className="w-4 h-4 text-emerald-600 dark:text-emerald-450" />
             <span className="text-sm font-semibold text-emerald-800 dark:text-emerald-300">Kos Modern, Nyaman & Terpercaya</span>
           </div>
-          <h1 className="text-4xl lg:text-6.5xl font-extrabold text-slate-900 dark:text-white mb-6 leading-tight tracking-tight">
-            Temukan Kamar Kos Impian<br />di <span className="text-transparent bg-clip-text bg-gradient-to-r from-emerald-600 via-emerald-500 to-teal-600 dark:from-emerald-450 dark:to-teal-400">Kos Cikawung</span>
+          <h1 className="text-4xl lg:text-6xl font-extrabold text-slate-900 dark:text-white mb-6 leading-tight tracking-tight">
+            Temukan Kamar Kos Impian<br />di <span className="text-transparent bg-clip-text bg-gradient-to-r from-emerald-600 via-emerald-500 to-teal-600 dark:from-emerald-400 dark:to-teal-355">Kos Cikawung</span>
           </h1>
-          <p className="text-lg lg:text-xl text-slate-700 dark:text-slate-350 max-w-2.5xl mx-auto mb-8 font-medium leading-relaxed">
+          <p className="text-lg lg:text-xl text-slate-700 dark:text-slate-300 max-w-2xl mx-auto mb-8 font-medium leading-relaxed">
             Kamar kos nyaman dengan fasilitas lengkap, lokasi strategis di Baleendah, dan harga terjangkau. Nikmati pengalaman tinggal yang modern, praktis, dan aman.
           </p>
           <div className="flex flex-col sm:flex-row items-center justify-center gap-4">
             <button onClick={() => scrollTo('rooms')} className="w-full sm:w-auto px-8 py-4 bg-emerald-600 hover:bg-emerald-700 text-white font-bold rounded-xl shadow-md hover:shadow-lg transition-all flex items-center justify-center gap-2">
               Lihat Kamar <ArrowRight className="w-5 h-5" />
             </button>
-            <a href="https://wa.me/6289635584373" target="_blank" rel="noopener noreferrer" className="w-full sm:w-auto px-8 py-4 bg-white text-slate-800 dark:bg-slate-900 dark:text-white font-bold rounded-xl border border-slate-300 dark:border-slate-800 hover:bg-slate-100 dark:hover:bg-slate-850 transition-all flex items-center justify-center gap-2 shadow-sm">
+            <a href="https://wa.me/6289635584373" target="_blank" rel="noopener noreferrer" className="w-full sm:w-auto px-8 py-4 bg-white text-slate-800 dark:bg-slate-900 dark:text-white font-bold rounded-xl border border-slate-300 dark:border-slate-800 hover:bg-slate-100 dark:hover:bg-slate-800 transition-all flex items-center justify-center gap-2 shadow-sm">
               <Phone className="w-5 h-5 text-emerald-600" /> Hubungi Kami
             </a>
           </div>
 
           {/* Stats */}
-          <div className="mt-16 grid grid-cols-2 lg:grid-cols-4 gap-4 max-w-3.5xl mx-auto">
+          <div className="mt-16 grid grid-cols-2 lg:grid-cols-4 gap-4 max-w-3xl mx-auto">
             {[
               { icon: BedDouble, val: '3', label: 'Kamar Tersedia' },
               { icon: Users, val: '50', label: 'Penghuni Puas' },
               { icon: Star, val: '4.8', label: 'Rating' },
               { icon: Clock, val: '24/7', label: 'Keamanan' },
             ].map((s, i) => (
-              <div key={i} className="bg-white dark:bg-slate-900 rounded-2xl p-5 border border-slate-200 dark:border-slate-850 shadow-sm transition-all hover:scale-[1.02]">
+              <div key={i} className="bg-white dark:bg-slate-900 rounded-2xl p-5 border border-slate-200 dark:border-slate-800 shadow-sm transition-all hover:scale-[1.02]">
                 <s.icon className="w-6 h-6 text-emerald-600 dark:text-emerald-400 mx-auto mb-3" />
                 <p className="text-3xl font-extrabold text-slate-900 dark:text-white">{s.val}</p>
                 <p className="text-xs font-semibold text-slate-600 dark:text-slate-400 uppercase tracking-wider mt-1">{s.label}</p>
@@ -160,7 +160,7 @@ export default function LandingPage() {
               { icon: '🔒', title: 'Keamanan 24 Jam', desc: 'Dilengkapi CCTV dan keamanan 24 jam untuk kenyamanan dan ketenangan Anda.' },
               { icon: '💳', title: 'Pembayaran Online', desc: 'Bayar sewa bulanan dengan mudah melalui berbagai metode pembayaran digital digital.' },
             ].map((item, i) => (
-              <div key={i} className="bg-slate-50 dark:bg-slate-900 rounded-2xl p-7 border border-slate-200/60 dark:border-slate-850 hover:shadow-md transition-shadow group">
+              <div key={i} className="bg-slate-50 dark:bg-slate-900 rounded-2xl p-7 border border-slate-200 dark:border-slate-800 hover:shadow-md transition-shadow group">
                 <span className="text-4xl mb-4 block">{item.icon}</span>
                 <h3 className="text-xl font-bold text-slate-900 dark:text-white mb-2 group-hover:text-emerald-600 dark:group-hover:text-emerald-400 transition-colors">{item.title}</h3>
                 <p className="text-sm text-slate-700 dark:text-slate-300 leading-relaxed font-medium">{item.desc}</p>
@@ -180,7 +180,7 @@ export default function LandingPage() {
           </div>
 
           {rooms.length === 0 ? (
-            <div className="text-center py-16 bg-white dark:bg-slate-900 rounded-2xl border border-slate-200 dark:border-slate-850 shadow-sm max-w-lg mx-auto">
+            <div className="text-center py-16 bg-white dark:bg-slate-900 rounded-2xl border border-slate-200 dark:border-slate-800 shadow-sm max-w-lg mx-auto">
               <BedDouble className="w-14 h-14 mx-auto mb-4 text-slate-400 opacity-60" />
               <p className="text-lg font-bold text-slate-800 dark:text-slate-200">Belum ada kamar tersedia saat ini</p>
               <p className="text-sm text-slate-600 dark:text-slate-400 mt-1">Silakan hubungi admin kami untuk informasi ketersediaan kamar terbaru.</p>
@@ -188,7 +188,7 @@ export default function LandingPage() {
           ) : (
             <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
               {rooms.map((room: any) => (
-                <div key={room.id} className="bg-white dark:bg-slate-900 rounded-2xl border border-slate-200 dark:border-slate-850 overflow-hidden hover:shadow-lg transition-all group shadow-sm">
+                <div key={room.id} className="bg-white dark:bg-slate-900 rounded-2xl border border-slate-200 dark:border-slate-800 overflow-hidden hover:shadow-lg transition-all group shadow-sm">
                   <div className="h-52 bg-gradient-to-br from-slate-100 to-slate-200 dark:from-slate-800 dark:to-slate-900 flex items-center justify-center relative">
                     {room.photos?.[0] ? (
                       <img src={`${import.meta.env.VITE_API_URL?.replace('/api', '')}${room.photos[0]}`} alt={room.name} className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-300" />
@@ -211,7 +211,7 @@ export default function LandingPage() {
                     </div>
                     <div className="flex items-center justify-between pt-4 border-t border-slate-100 dark:border-slate-800">
                       <div>
-                        <p className="text-2xl font-extrabold text-emerald-600 dark:text-emerald-450">{formatRupiah(Number(room.monthlyPrice))}</p>
+                        <p className="text-2xl font-extrabold text-emerald-600 dark:text-emerald-400">{formatRupiah(Number(room.monthlyPrice))}</p>
                         <p className="text-xs font-bold text-slate-500">/ bulan</p>
                       </div>
                       <button
@@ -247,7 +247,7 @@ export default function LandingPage() {
               { icon: ShieldCheck, label: 'Keamanan 24 Jam', desc: 'Keamanan ekstra terjaga siang dan malam.' },
               { icon: Trash2, label: 'Kebersihan Sampah', desc: 'Pengelolaan sampah teratur, lingkungan bersih bebas bau.' },
             ].map((f, i) => (
-              <div key={i} className="bg-slate-50 dark:bg-slate-900 rounded-2xl p-6 border border-slate-200/60 dark:border-slate-850 hover:border-emerald-300 dark:hover:border-emerald-800 transition-colors group shadow-sm">
+              <div key={i} className="bg-slate-50 dark:bg-slate-900 rounded-2xl p-6 border border-slate-200 dark:border-slate-800 hover:border-emerald-300 dark:hover:border-emerald-850 transition-colors group shadow-sm">
                 <div className="w-12 h-12 rounded-xl bg-emerald-50 dark:bg-emerald-950/60 border border-emerald-100/50 dark:border-emerald-900/30 flex items-center justify-center mb-4 transition-colors">
                   <f.icon className="w-6 h-6 text-emerald-600 dark:text-emerald-400" />
                 </div>
@@ -267,8 +267,8 @@ export default function LandingPage() {
             <h2 className="text-3xl lg:text-4xl font-extrabold text-slate-900 dark:text-white mt-2 mb-4">Apa Kata Mereka?</h2>
           </div>
           <div className="flex justify-center">
-            <div className="text-center py-14 px-8 border border-dashed border-slate-350 dark:border-slate-800 rounded-3xl w-full max-w-2xl bg-white dark:bg-slate-900 shadow-sm">
-              <Star className="w-12 h-12 mx-auto mb-4 text-emerald-500 fill-emerald-500 animate-pulse" />
+            <div className="text-center py-14 px-8 border border-dashed border-slate-300 dark:border-slate-800 rounded-3xl w-full max-w-2xl bg-white dark:bg-slate-900 shadow-sm">
+              <Star className="w-12 h-12 mx-auto mb-4 text-emerald-500 fill-emerald-500" />
               <p className="text-xl font-bold text-slate-900 dark:text-white">Belum ada testimoni saat ini</p>
               <p className="text-sm text-slate-700 dark:text-slate-300 mt-2 font-medium leading-relaxed max-w-md mx-auto">
                 Kolom kepuasan dan ulasan akan diisi secara otomatis langsung oleh penyewa kos melalui form kepuasan di aplikasi.
@@ -298,26 +298,26 @@ export default function LandingPage() {
             />
           </div>
           <div className="mt-8 grid grid-cols-1 md:grid-cols-3 gap-6 text-slate-800 dark:text-slate-200">
-            <div className="flex gap-3 bg-slate-50 dark:bg-slate-900 p-5 rounded-2xl border border-slate-200/60 dark:border-slate-850">
-              <MapPin className="w-6 h-6 text-emerald-600 dark:text-emerald-450 flex-shrink-0 mt-0.5" />
+            <div className="flex gap-3 bg-slate-50 dark:bg-slate-900 p-5 rounded-2xl border border-slate-200 dark:border-slate-800">
+              <MapPin className="w-6 h-6 text-emerald-600 dark:text-emerald-400 flex-shrink-0 mt-0.5" />
               <div>
                 <h4 className="font-bold text-slate-900 dark:text-white mb-1">Alamat Lengkap</h4>
-                <p className="text-sm font-medium text-slate-700 dark:text-slate-350 leading-relaxed">Jalan Cikawung Sari no 9 RT03/10 desa warga mekar kecamatan Baleendah, KAB. BANDUNG, BALEENDAH, JAWA BARAT, ID, 40375</p>
+                <p className="text-sm font-medium text-slate-700 dark:text-slate-300 leading-relaxed">Jalan Cikawung Sari no 9 RT03/10 desa warga mekar kecamatan Baleendah, KAB. BANDUNG, BALEENDAH, JAWA BARAT, ID, 40375</p>
               </div>
             </div>
-            <div className="flex gap-3 bg-slate-50 dark:bg-slate-900 p-5 rounded-2xl border border-slate-200/60 dark:border-slate-850">
-              <Phone className="w-6 h-6 text-emerald-600 dark:text-emerald-450 flex-shrink-0 mt-0.5" />
+            <div className="flex gap-3 bg-slate-50 dark:bg-slate-900 p-5 rounded-2xl border border-slate-200 dark:border-slate-800">
+              <Phone className="w-6 h-6 text-emerald-600 dark:text-emerald-400 flex-shrink-0 mt-0.5" />
               <div>
                 <h4 className="font-bold text-slate-900 dark:text-white mb-1">Hubungi Kami</h4>
                 <p className="text-sm font-bold text-emerald-600 dark:text-emerald-400 mt-1">0896-3558-4373</p>
                 <p className="text-xs font-semibold text-slate-500 mt-1">WhatsApp Fast Response</p>
               </div>
             </div>
-            <div className="flex gap-3 bg-slate-50 dark:bg-slate-900 p-5 rounded-2xl border border-slate-200/60 dark:border-slate-850">
-              <Mail className="w-6 h-6 text-emerald-600 dark:text-emerald-450 flex-shrink-0 mt-0.5" />
+            <div className="flex gap-3 bg-slate-50 dark:bg-slate-900 p-5 rounded-2xl border border-slate-200 dark:border-slate-800">
+              <Mail className="w-6 h-6 text-emerald-600 dark:text-emerald-400 flex-shrink-0 mt-0.5" />
               <div>
                 <h4 className="font-bold text-slate-900 dark:text-white mb-1">Kirim Email</h4>
-                <p className="text-sm font-medium text-slate-700 dark:text-slate-350 leading-relaxed">info@koscikawung.com</p>
+                <p className="text-sm font-medium text-slate-700 dark:text-slate-300 leading-relaxed">info@koscikawung.com</p>
                 <p className="text-xs font-semibold text-slate-500 mt-1">Tanggapan dalam 24 jam</p>
               </div>
             </div>
@@ -334,16 +334,16 @@ export default function LandingPage() {
           </div>
           <div className="space-y-4">
             {FAQS.map((faq, i) => (
-              <div key={i} className="bg-white dark:bg-slate-900 rounded-2xl border border-slate-200 dark:border-slate-850 overflow-hidden shadow-sm transition-all hover:border-slate-300 dark:hover:border-slate-800">
+              <div key={i} className="bg-white dark:bg-slate-900 rounded-2xl border border-slate-200 dark:border-slate-800 overflow-hidden shadow-sm transition-all hover:border-slate-350 dark:hover:border-slate-800">
                 <button
                   onClick={() => setOpenFaq(openFaq === i ? null : i)}
-                  className="w-full flex items-center justify-between p-5 text-left font-bold text-slate-850 dark:text-slate-100"
+                  className="w-full flex items-center justify-between p-5 text-left font-bold text-slate-800 dark:text-slate-100"
                 >
                   <span className="text-base pr-4 leading-relaxed">{faq.q}</span>
                   {openFaq === i ? <ChevronUp className="w-5 h-5 text-emerald-600 dark:text-emerald-400 flex-shrink-0" /> : <ChevronDown className="w-5 h-5 text-slate-400 flex-shrink-0" />}
                 </button>
                 {openFaq === i && (
-                  <div className="px-5 pb-5 animate-fade-in border-t border-slate-100/50 dark:border-slate-850 pt-4">
+                  <div className="px-5 pb-5 animate-fade-in border-t border-slate-100/50 dark:border-slate-800 pt-4">
                     <p className="text-sm text-slate-700 dark:text-slate-300 leading-relaxed font-semibold">{faq.a}</p>
                   </div>
                 )}
@@ -356,13 +356,13 @@ export default function LandingPage() {
       {/* CTA */}
       <section className="py-20 bg-slate-900 dark:bg-slate-950 text-white border-t border-slate-800">
         <div className="max-w-4xl mx-auto px-4 text-center">
-          <h2 className="text-3xl lg:text-4.5xl font-extrabold text-white mb-4">Siap Bergabung Bersama Kami?</h2>
+          <h2 className="text-3xl lg:text-4xl font-extrabold text-white mb-4">Siap Bergabung Bersama Kami?</h2>
           <p className="text-lg text-slate-300 mb-8 font-semibold">Hubungi kami sekarang untuk konfirmasi pemesanan dan temukan kamar kos impian Anda di Baleendah!</p>
           <div className="flex flex-col sm:flex-row items-center justify-center gap-4">
             <a href="https://wa.me/6289635584373" target="_blank" rel="noopener noreferrer" className="w-full sm:w-auto px-8 py-4 bg-emerald-600 hover:bg-emerald-700 text-white font-bold rounded-xl shadow-lg transition-all flex items-center justify-center gap-2">
               <Phone className="w-5 h-5" /> Chat WhatsApp Sekarang
             </a>
-            <button onClick={() => scrollTo('rooms')} className="w-full sm:w-auto px-8 py-4 bg-slate-800 hover:bg-slate-700 text-white font-bold rounded-xl border border-slate-750 transition-all flex items-center justify-center">
+            <button onClick={() => scrollTo('rooms')} className="w-full sm:w-auto px-8 py-4 bg-slate-850 hover:bg-slate-800 text-white font-bold rounded-xl border border-slate-700 transition-all flex items-center justify-center">
               Lihat Ketersediaan Kamar
             </button>
           </div>
@@ -418,7 +418,7 @@ export default function LandingPage() {
               <div className="p-8 text-center">
                 <CheckCircle className="w-16 h-16 text-emerald-500 mx-auto mb-4" />
                 <h3 className="text-xl font-bold text-slate-900 dark:text-white mb-2">Booking Berhasil!</h3>
-                <p className="text-sm text-slate-650 dark:text-slate-300 mb-4 font-semibold">Terima kasih! Pemesanan Anda telah terdaftar. Admin akan segera menghubungi Anda untuk konfirmasi.</p>
+                <p className="text-sm text-slate-700 dark:text-slate-350 mb-4 font-semibold">Terima kasih! Pemesanan Anda telah terdaftar. Admin akan segera menghubungi Anda untuk konfirmasi.</p>
                 <button onClick={() => setShowBooking(false)} className="btn-primary mx-auto font-bold px-6 py-2.5">Tutup</button>
               </div>
             ) : (
