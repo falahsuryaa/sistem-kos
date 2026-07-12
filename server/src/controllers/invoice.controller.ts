@@ -323,7 +323,7 @@ export const generateInvoicePDF = async (req: Request, res: Response): Promise<v
 
 export const uploadPaymentProof = async (req: AuthRequest, res: Response): Promise<void> => {
   try {
-    const { id } = req.params;
+    const id = req.params.id as string;
     const file = req.file;
     if (!file) {
       res.status(400).json({ success: false, message: 'File bukti pembayaran wajib diunggah' });
