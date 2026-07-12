@@ -64,8 +64,9 @@ app.use(cors({
 // Rate limiting
 const limiter = rateLimit({
   windowMs: 15 * 60 * 1000, // 15 minutes
-  max: process.env.NODE_ENV === 'development' ? 10000 : 200,
+  max: 200,
   message: { success: false, message: 'Terlalu banyak request, coba lagi nanti.' },
+  skip: () => process.env.NODE_ENV === 'development',
 });
 app.use('/api', limiter);
 
