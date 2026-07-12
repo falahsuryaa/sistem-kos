@@ -32,6 +32,14 @@ export const login = async (req: Request, res: Response): Promise<void> => {
       return;
     }
 
+    if (user.role === 'TENANT') {
+      const tenant = await prisma.tenant.findUnique({ where: { userId: user.id } });
+      if (tenant && !tenant.isActive) {
+        res.status(401).json({ success: false, message: 'Akun Anda sudah dinonaktifkan' });
+        return;
+      }
+    }
+
     const isMatch = await bcrypt.compare(password, user.password);
     if (!isMatch) {
       res.status(401).json({ success: false, message: 'Email atau password salah' });
@@ -101,7 +109,15 @@ export const refreshToken = async (req: Request, res: Response): Promise<void> =
 
     const decoded = jwt.verify(token, process.env.JWT_REFRESH_SECRET!) as { id: string };
     const user = await prisma.user.findUnique({ where: { id: decoded.id, refreshToken: token } });
-    if (!user) { res.status(401).json({ success: false, message: 'Refresh token tidak valid' }); return; }
+    if (!user || !user.isActive) { res.status(401).json({ success: false, message: 'Refresh token tidak valid atau user tidak aktif' }); return; }
+
+    if (user.role === 'TENANT') {
+      const tenant = await prisma.tenant.findUnique({ where: { userId: user.id } });
+      if (tenant && !tenant.isActive) {
+        res.status(401).json({ success: false, message: 'Refresh token tidak valid atau penyewa tidak aktif' });
+        return;
+      }
+    }
 
     const tokens = generateTokens(user);
     await prisma.user.update({ where: { id: user.id }, data: { refreshToken: tokens.refreshToken } });

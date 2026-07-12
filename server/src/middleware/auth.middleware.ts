@@ -27,6 +27,14 @@ export const authenticate = async (req: AuthRequest, res: Response, next: NextFu
       return;
     }
 
+    if (user.role === 'TENANT') {
+      const tenant = await prisma.tenant.findUnique({ where: { userId: user.id } });
+      if (tenant && !tenant.isActive) {
+        res.status(401).json({ success: false, message: 'Akun penyewa Anda tidak aktif' });
+        return;
+      }
+    }
+
     req.user = { id: user.id, email: user.email, role: user.role, name: user.name };
     next();
   } catch {

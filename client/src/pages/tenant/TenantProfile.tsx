@@ -83,12 +83,18 @@ export default function TenantProfile() {
       </div>
 
       {/* QR Code */}
-      {profile?.qrCode && (
+      {profile?.id && (
         <div className="card p-6 text-center">
           <h3 className="font-semibold text-slate-900 dark:text-white mb-3 flex items-center justify-center gap-2">
             <QrCode className="w-5 h-5 text-emerald-500" /> QR Code Penghuni
           </h3>
-          <img src={profile.qrCode} alt="QR Code" className="mx-auto w-48 h-48 rounded-lg border border-slate-200 dark:border-slate-700" />
+          <img
+            src={`https://api.qrserver.com/v1/create-qr-code/?size=250x250&data=${encodeURIComponent(
+              `${window.location.origin}/verify-tenant/${profile.id}`
+            )}`}
+            alt="QR Code"
+            className="mx-auto w-48 h-48 rounded-lg border border-slate-200 dark:border-slate-700 shadow-sm"
+          />
           <p className="text-xs text-slate-500 dark:text-slate-400 mt-2">Gunakan QR code ini untuk identifikasi dan check-in</p>
         </div>
       )}
