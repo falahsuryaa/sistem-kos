@@ -1,7 +1,7 @@
 import { useState, useEffect } from 'react';
 import { useQuery, useMutation, useQueryClient } from '@tanstack/react-query';
 import {
-  User, Loader2, Mail, Phone, MapPin, CreditCard, Calendar, QrCode, Star, Trash2
+  User, Loader2, Mail, Phone, MapPin, CreditCard, Calendar, QrCode, Star
 } from 'lucide-react';
 import { toast } from 'react-hot-toast';
 import api from '../../lib/api';
