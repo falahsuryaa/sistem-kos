@@ -26,25 +26,25 @@ export default function LoginPage() {
   };
 
   return (
-    <div className="min-h-screen flex">
+    <div className="min-h-screen flex transition-colors duration-200">
       {/* Left Panel - Decorative */}
-      <div className="hidden lg:flex lg:w-1/2 bg-gradient-to-br from-blue-600 via-blue-700 to-indigo-800 relative overflow-hidden flex-col items-center justify-center p-12">
+      <div className="hidden lg:flex lg:w-1/2 bg-gradient-to-br from-emerald-600 via-emerald-700 to-teal-800 relative overflow-hidden flex-col items-center justify-center p-12">
         {/* Background circles */}
         <div className="absolute top-0 right-0 w-96 h-96 bg-white/5 rounded-full -translate-y-1/2 translate-x-1/2" />
         <div className="absolute bottom-0 left-0 w-80 h-80 bg-white/5 rounded-full translate-y-1/2 -translate-x-1/2" />
         <div className="absolute top-1/2 left-1/2 w-64 h-64 bg-white/5 rounded-full -translate-x-1/2 -translate-y-1/2" />
 
         <div className="relative z-10 text-white text-center">
-          <div className="w-24 h-24 bg-white/20 rounded-3xl flex items-center justify-center mx-auto mb-8 backdrop-blur-sm">
+          <div className="w-24 h-24 bg-white/20 rounded-3xl flex items-center justify-center mx-auto mb-8 backdrop-blur-sm border border-white/10">
             <Home className="w-12 h-12 text-white" />
           </div>
-          <h1 className="text-4xl font-bold mb-4">Kos Ciparay</h1>
-          <p className="text-blue-100 text-lg max-w-sm leading-relaxed">
+          <h1 className="text-4xl font-extrabold mb-4 tracking-tight">Kos Cikawung</h1>
+          <p className="text-emerald-100 text-lg max-w-sm leading-relaxed font-medium">
             Sistem Manajemen Kos Modern untuk Pengelolaan yang Lebih Efisien & Profesional
           </p>
 
           {/* Feature list */}
-          <div className="mt-10 space-y-3 text-left">
+          <div className="mt-10 space-y-3.5 text-left font-semibold">
             {['Dashboard & Analitik Real-time', 'Manajemen Kamar & Penyewa', 'Tagihan & Pembayaran Online', 'Laporan Keuangan Lengkap'].map((feature) => (
               <div key={feature} className="flex items-center gap-3">
                 <div className="w-5 h-5 rounded-full bg-white/30 flex items-center justify-center flex-shrink-0">
@@ -52,7 +52,7 @@ export default function LoginPage() {
                     <path fillRule="evenodd" d="M16.707 5.293a1 1 0 010 1.414l-8 8a1 1 0 01-1.414 0l-4-4a1 1 0 011.414-1.414L8 12.586l7.293-7.293a1 1 0 011.414 0z" clipRule="evenodd" />
                   </svg>
                 </div>
-                <span className="text-blue-100 text-sm">{feature}</span>
+                <span className="text-emerald-100 text-sm">{feature}</span>
               </div>
             ))}
           </div>
@@ -60,25 +60,25 @@ export default function LoginPage() {
       </div>
 
       {/* Right Panel - Login Form */}
-      <div className="flex-1 flex items-center justify-center p-8 bg-slate-50 dark:bg-slate-900">
+      <div className="flex-1 flex items-center justify-center p-8 bg-slate-50 dark:bg-slate-950">
         <div className="w-full max-w-md">
           {/* Mobile Logo */}
           <div className="lg:hidden flex items-center gap-3 mb-8">
-            <div className="w-10 h-10 rounded-xl bg-gradient-to-br from-blue-500 to-blue-700 flex items-center justify-center">
+            <div className="w-10 h-10 rounded-xl bg-gradient-to-br from-emerald-500 to-emerald-700 flex items-center justify-center">
               <Home className="w-5 h-5 text-white" />
             </div>
-            <h1 className="text-2xl font-bold text-slate-900 dark:text-white">Kos Ciparay</h1>
+            <h1 className="text-2xl font-bold text-slate-900 dark:text-white">Kos Cikawung</h1>
           </div>
 
-          <div className="bg-white dark:bg-slate-800 rounded-2xl p-8 shadow-xl border border-slate-200 dark:border-slate-700">
+          <div className="bg-white dark:bg-slate-900 rounded-3xl p-8 shadow-xl border border-slate-200 dark:border-slate-800">
             <h2 className="text-2xl font-bold text-slate-900 dark:text-white mb-1">Selamat Datang</h2>
-            <p className="text-slate-500 dark:text-slate-400 text-sm mb-8">Masuk ke akun Kos Ciparay Anda</p>
+            <p className="text-slate-600 dark:text-slate-400 text-sm mb-8 font-semibold">Masuk ke akun Kos Cikawung Anda</p>
 
             <form onSubmit={handleSubmit} className="space-y-5">
               <div>
                 <label className="label">Email</label>
                 <div className="relative">
-                  <Mail className="absolute left-3 top-1/2 -translate-y-1/2 w-4 h-4 text-slate-400" />
+                  <Mail className="absolute left-3 top-1/2 -translate-y-1/2 w-4 h-4 text-slate-500" />
                   <input
                     type="email"
                     value={email}
@@ -93,7 +93,7 @@ export default function LoginPage() {
               <div>
                 <label className="label">Password</label>
                 <div className="relative">
-                  <Lock className="absolute left-3 top-1/2 -translate-y-1/2 w-4 h-4 text-slate-400" />
+                  <Lock className="absolute left-3 top-1/2 -translate-y-1/2 w-4 h-4 text-slate-500" />
                   <input
                     type={showPassword ? 'text' : 'password'}
                     value={password}
@@ -115,7 +115,7 @@ export default function LoginPage() {
               <button
                 type="submit"
                 disabled={isLoading}
-                className="w-full bg-blue-600 hover:bg-blue-700 disabled:opacity-60 disabled:cursor-not-allowed text-white font-semibold py-3 px-4 rounded-xl transition-all duration-200 flex items-center justify-center gap-2 shadow-lg shadow-blue-500/30"
+                className="w-full bg-emerald-600 hover:bg-emerald-700 disabled:opacity-60 disabled:cursor-not-allowed text-white font-bold py-3 px-4 rounded-xl transition-all duration-200 flex items-center justify-center gap-2 shadow-md shadow-emerald-500/10"
               >
                 {isLoading ? (
                   <><Loader2 className="w-4 h-4 animate-spin" /> Memproses...</>
@@ -126,8 +126,8 @@ export default function LoginPage() {
             </form>
           </div>
 
-          <p className="text-center mt-6 text-sm text-slate-500 dark:text-slate-400">
-            <Link to="/" className="text-blue-600 hover:text-blue-700 font-medium">← Kembali ke Halaman Utama</Link>
+          <p className="text-center mt-6 text-sm text-slate-550">
+            <Link to="/" className="text-emerald-600 dark:text-emerald-400 hover:underline font-bold">← Kembali ke Halaman Utama</Link>
           </p>
         </div>
       </div>
