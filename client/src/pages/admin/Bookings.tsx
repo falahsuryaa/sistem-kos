@@ -53,7 +53,7 @@ export default function AdminBookings() {
 
   const updateMutation = useMutation({
     mutationFn: (payload: { id: string; status: string; adminNotes?: string }) =>
-      api.put(`/bookings/${payload.id}`, payload),
+      api.put(`/bookings/${payload.id}/status`, payload),
     onSuccess: (res) => {
       qc.invalidateQueries({ queryKey: ['bookings'] });
       toast.success(res.data.message || 'Status booking diperbarui');

@@ -55,6 +55,8 @@ function RoomModal({ room, onClose, facilities }: { room?: Room; onClose: () => 
     description: room?.description || '',
   });
   const [selectedFacilities, setSelectedFacilities] = useState<string[]>(room?.facilities.map(f => f.facility.id) || []);
+  const [photosList, setPhotosList] = useState<FileList | null>(null);
+  const [roomPhotos, setRoomPhotos] = useState<string[]>(room?.photos || []);
 
   const mutation = useMutation({
     mutationFn: async (data: FormData) => {
@@ -74,6 +76,12 @@ function RoomModal({ room, onClose, facilities }: { room?: Room; onClose: () => 
     const fd = new FormData();
     Object.entries(form).forEach(([k, v]) => fd.append(k, v));
     selectedFacilities.forEach(fId => fd.append('facilityIds', fId));
+    if (photosList && photosList.length > 0) {
+      for (let i = 0; i < photosList.length; i++) {
+        fd.append('photos', photosList[i]);
+      }
+    }
+    fd.append('remainingPhotos', JSON.stringify(roomPhotos));
     mutation.mutate(fd);
   };
 
@@ -135,6 +143,40 @@ function RoomModal({ room, onClose, facilities }: { room?: Room; onClose: () => 
           <div>
             <label className="label">Deskripsi</label>
             <textarea className="input resize-none" rows={2} value={form.description} onChange={e => setForm({...form, description: e.target.value})} placeholder="Deskripsi singkat kamar..." />
+          </div>
+          <div>
+            <label className="label">Foto Kamar (Maks 10 file, png/jpg)</label>
+            <input
+              type="file"
+              multiple
+              accept="image/*"
+              onChange={(e) => setPhotosList(e.target.files)}
+              className="input py-2 text-xs"
+            />
+            {room && roomPhotos.length > 0 && (
+              <div className="mt-3">
+                <p className="text-xs text-slate-500 dark:text-slate-400 mb-1.5">Foto Saat Ini (klik foto untuk menghapus):</p>
+                <div className="flex gap-2 flex-wrap">
+                  {roomPhotos.map((photoUrl, idx) => (
+                    <div
+                      key={idx}
+                      className="relative group cursor-pointer"
+                      onClick={() => setRoomPhotos(prev => prev.filter(url => url !== photoUrl))}
+                      title="Klik untuk menghapus foto ini"
+                    >
+                      <img
+                        src={photoUrl.startsWith('http') ? photoUrl : `${import.meta.env.VITE_API_URL?.replace('/api', '') || ''}${photoUrl}`}
+                        alt=""
+                        className="w-16 h-16 rounded-lg object-cover border border-slate-200 dark:border-slate-700 hover:opacity-50 transition-opacity"
+                      />
+                      <div className="absolute inset-0 flex items-center justify-center bg-black/40 rounded-lg opacity-0 group-hover:opacity-100 transition-opacity">
+                        <X className="w-4 h-4 text-white" />
+                      </div>
+                    </div>
+                  ))}
+                </div>
+              </div>
+            )}
           </div>
           {facilities.length > 0 && (
             <div>

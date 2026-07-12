@@ -205,6 +205,16 @@ export default function AdminInvoices() {
                             Tandai Lunas
                           </button>
                         )}
+                        {inv.status === 'PAID' && (
+                          <a
+                            href={`${import.meta.env.VITE_API_URL}/invoices/${inv.id}/pdf`}
+                            target="_blank"
+                            rel="noopener noreferrer"
+                            className="px-2 py-1 bg-slate-100 dark:bg-slate-800 text-slate-650 dark:text-slate-350 text-xs font-semibold rounded hover:bg-slate-200 dark:hover:bg-slate-700 transition-colors inline-flex items-center gap-1"
+                          >
+                            📄 Nota
+                          </a>
+                        )}
                       </div>
                     </td>
                   </tr>

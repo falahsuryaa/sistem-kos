@@ -106,7 +106,18 @@ export const updateRoom = async (req: AuthRequest, res: Response): Promise<void>
     const existing = await prisma.room.findUnique({ where: { id: req.params.id as string } });
     if (!existing) { res.status(404).json({ success: false, message: 'Kamar tidak ditemukan' }); return; }
 
-    const photos = newPhotos.length > 0 ? [...existing.photos, ...newPhotos] : existing.photos;
+    let photos = existing.photos;
+    const { remainingPhotos } = req.body;
+    if (remainingPhotos !== undefined) {
+      try {
+        photos = typeof remainingPhotos === 'string' ? JSON.parse(remainingPhotos) : remainingPhotos;
+      } catch {
+        // Fallback
+      }
+    }
+    if (newPhotos.length > 0) {
+      photos = [...photos, ...newPhotos];
+    }
 
     const room = await prisma.room.update({
       where: { id: req.params.id as string },

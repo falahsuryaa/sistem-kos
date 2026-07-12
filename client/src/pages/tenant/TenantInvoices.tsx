@@ -134,9 +134,21 @@ export default function TenantInvoices() {
                           href={inv.paymentProof}
                           target="_blank"
                           rel="noopener noreferrer"
-                          className="text-emerald-600 dark:text-emerald-400 hover:underline font-semibold flex items-center gap-1.5"
+                          className="text-emerald-600 dark:text-emerald-400 hover:underline font-semibold inline-flex items-center gap-1.5"
                         >
                           <Eye className="w-3.5 h-3.5" /> Lihat Bukti Terkirim
+                        </a>
+                      </div>
+                    )}
+                    {inv.status === 'PAID' && (
+                      <div className="mt-2 text-xs">
+                        <a
+                          href={`${import.meta.env.VITE_API_URL}/invoices/${inv.id}/pdf`}
+                          target="_blank"
+                          rel="noopener noreferrer"
+                          className="text-emerald-600 dark:text-emerald-400 hover:underline font-semibold inline-flex items-center gap-1.5"
+                        >
+                          📄 Cetak Nota Pembayaran
                         </a>
                       </div>
                     )}
