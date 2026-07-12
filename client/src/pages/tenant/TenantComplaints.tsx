@@ -23,6 +23,8 @@ export default function TenantComplaints() {
   const [title, setTitle] = useState('');
   const [description, setDescription] = useState('');
   const [category, setCategory] = useState('OTHER');
+  const [photos, setPhotos] = useState<FileList | null>(null);
+  
   const qc = useQueryClient();
 
   const { data, isLoading } = useQuery({
@@ -39,6 +41,11 @@ export default function TenantComplaints() {
       formData.append('title', title);
       formData.append('description', description);
       formData.append('category', category);
+      if (photos && photos.length > 0) {
+        for (let i = 0; i < photos.length; i++) {
+          formData.append('photos', photos[i]);
+        }
+      }
       const { data } = await api.post('/complaints', formData, {
         headers: { 'Content-Type': 'multipart/form-data' },
       });
@@ -51,6 +58,7 @@ export default function TenantComplaints() {
       setTitle('');
       setDescription('');
       setCategory('OTHER');
+      setPhotos(null);
     },
     onError: () => toast.error('Gagal mengirim keluhan'),
   });
@@ -70,7 +78,7 @@ export default function TenantComplaints() {
           <h1 className="text-2xl font-bold text-slate-900 dark:text-white">Keluhan Saya</h1>
           <p className="text-sm text-slate-500 dark:text-slate-400 mt-0.5">{complaints.length} keluhan</p>
         </div>
-        <button onClick={() => setShowForm(true)} className="btn-primary">
+        <button onClick={() => setShowForm(true)} className="btn-primary py-2 px-3 sm:py-2.5 sm:px-4 text-xs sm:text-sm">
           <Plus className="w-4 h-4" /> Buat Keluhan
         </button>
       </div>
@@ -92,14 +100,14 @@ export default function TenantComplaints() {
             const StIcon = st.icon;
             return (
               <div key={c.id} className="card p-5 hover:shadow-md transition-shadow">
-                <div className="flex items-start gap-4">
-                  <div className={`w-10 h-10 rounded-xl flex items-center justify-center flex-shrink-0 ${
+                <div className="flex items-start gap-3 sm:gap-4">
+                  <div className={`w-8 h-8 sm:w-10 sm:h-10 rounded-xl flex items-center justify-center flex-shrink-0 ${
                     c.status === 'RESOLVED' ? 'bg-emerald-100 dark:bg-emerald-900/30' :
                     c.status === 'IN_PROGRESS' ? 'bg-emerald-100 dark:bg-emerald-900/30' :
                     c.status === 'CLOSED' ? 'bg-slate-100 dark:bg-slate-700' :
                     'bg-amber-100 dark:bg-amber-900/30'
                   }`}>
-                    <StIcon className={`w-5 h-5 ${
+                    <StIcon className={`w-4.5 h-4.5 sm:w-5 sm:h-5 ${
                       c.status === 'RESOLVED' ? 'text-emerald-600 dark:text-emerald-400' :
                       c.status === 'IN_PROGRESS' ? 'text-emerald-600 dark:text-emerald-400' :
                       c.status === 'CLOSED' ? 'text-slate-500' :
@@ -107,12 +115,27 @@ export default function TenantComplaints() {
                     }`} />
                   </div>
                   <div className="flex-1 min-w-0">
-                    <div className="flex items-center gap-2 mb-1">
-                      <h3 className="font-semibold text-slate-900 dark:text-white">{c.title}</h3>
-                      <span className={`badge ${st.cls}`}>{st.label}</span>
+                    <div className="flex flex-wrap items-center gap-2 mb-1.5">
+                      <h3 className="font-semibold text-slate-900 dark:text-white text-sm sm:text-base">{c.title}</h3>
+                      <span className={`badge ${st.cls} text-[10px] py-0.5 px-1.5`}>{st.label}</span>
                     </div>
-                    <p className="text-sm text-slate-600 dark:text-slate-400 line-clamp-2">{c.description}</p>
-                    <div className="flex items-center gap-3 mt-2 text-xs text-slate-500">
+                    <p className="text-sm text-slate-600 dark:text-slate-400 whitespace-pre-wrap">{c.description}</p>
+                    
+                    {c.photos && c.photos.length > 0 && (
+                      <div className="flex gap-1.5 mt-2.5 flex-wrap">
+                        {c.photos.map((photo: string, idx: number) => (
+                          <img
+                            key={idx}
+                            src={photo.startsWith('http') ? photo : `${import.meta.env.VITE_API_URL?.replace('/api', '') || ''}${photo}`}
+                            alt=""
+                            className="w-16 h-16 sm:w-20 sm:h-20 rounded-lg object-cover border border-slate-200 dark:border-slate-700 cursor-pointer hover:opacity-85 transition-opacity"
+                            onClick={() => window.open(photo.startsWith('http') ? photo : `${import.meta.env.VITE_API_URL?.replace('/api', '') || ''}${photo}`, '_blank')}
+                          />
+                        ))}
+                      </div>
+                    )}
+
+                    <div className="flex items-center gap-3 mt-2.5 text-xs text-slate-500">
                       <span className="badge-emerald">{CATEGORY_MAP[c.category] || c.category}</span>
                       <span>{new Date(c.createdAt).toLocaleDateString('id-ID')}</span>
                     </div>
@@ -162,6 +185,16 @@ export default function TenantComplaints() {
               <div>
                 <label className="label">Deskripsi</label>
                 <textarea className="input min-h-24" value={description} onChange={(e) => setDescription(e.target.value)} placeholder="Jelaskan keluhan Anda secara detail..." required />
+              </div>
+              <div>
+                <label className="label">Foto Bukti (maks 5 file, jpg/png)</label>
+                <input
+                  type="file"
+                  multiple
+                  accept="image/jpeg,image/jpg,image/png,image/webp,image/gif"
+                  onChange={(e) => setPhotos(e.target.files)}
+                  className="input py-2 text-xs"
+                />
               </div>
               <div className="flex justify-end gap-3 pt-2">
                 <button type="button" onClick={() => setShowForm(false)} className="btn-secondary">Batal</button>

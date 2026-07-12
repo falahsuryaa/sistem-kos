@@ -2,6 +2,7 @@ import { Request, Response } from 'express';
 import { prisma } from '../lib/prisma';
 import { AuthRequest } from '../middleware/auth.middleware';
 import { createNotification } from './notification.controller';
+import { uploadFileToBlob } from '../lib/blob';
 
 const generateInvoiceNumber = async (): Promise<string> => {
   const now = new Date();
@@ -226,5 +227,51 @@ Status: ${invoice.status}
     res.send(content);
   } catch (err) {
     res.status(500).json({ success: false, message: 'Server error' });
+  }
+};
+
+export const uploadPaymentProof = async (req: AuthRequest, res: Response): Promise<void> => {
+  try {
+    const { id } = req.params;
+    const file = req.file;
+    if (!file) {
+      res.status(400).json({ success: false, message: 'File bukti pembayaran wajib diunggah' });
+      return;
+    }
+
+    const invoice = await prisma.invoice.findUnique({
+      where: { id },
+      include: { tenant: true },
+    });
+    if (!invoice) {
+      res.status(404).json({ success: false, message: 'Invoice tidak ditemukan' });
+      return;
+    }
+
+    // Check if tenant is uploading their own invoice
+    if (req.user!.role === 'TENANT' && invoice.tenant.userId !== req.user!.id) {
+      res.status(403).json({ success: false, message: 'Akses ditolak' });
+      return;
+    }
+
+    // Upload to Vercel Blob
+    const paymentProofUrl = await uploadFileToBlob(file);
+
+    // Update invoice with the proof url
+    const updated = await prisma.invoice.update({
+      where: { id },
+      data: {
+        paymentProof: paymentProofUrl,
+      },
+    });
+
+    res.json({
+      success: true,
+      message: 'Bukti pembayaran berhasil diunggah, menunggu konfirmasi admin',
+      data: updated,
+    });
+  } catch (err) {
+    console.error('Upload proof error:', err);
+    res.status(500).json({ success: false, message: 'Gagal mengunggah bukti pembayaran', error: String(err) });
   }
 };

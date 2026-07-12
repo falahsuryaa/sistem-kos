@@ -196,10 +196,16 @@ export default function AdminComplaints() {
               </div>
               {detail.photos.length > 0 && (
                 <div>
-                  <p className="text-xs text-slate-500 dark:text-slate-400 mb-2">Foto</p>
+                  <p className="text-xs text-slate-500 dark:text-slate-400 mb-2">Foto Bukti</p>
                   <div className="flex gap-2 flex-wrap">
                     {detail.photos.map((p, i) => (
-                      <img key={i} src={`${import.meta.env.VITE_API_URL?.replace('/api', '')}${p}`} alt="" className="w-20 h-20 rounded-lg object-cover border border-slate-200 dark:border-slate-700" />
+                      <img
+                        key={i}
+                        src={p.startsWith('http') ? p : `${import.meta.env.VITE_API_URL?.replace('/api', '') || ''}${p}`}
+                        alt=""
+                        className="w-20 h-20 rounded-lg object-cover border border-slate-200 dark:border-slate-700 cursor-pointer hover:opacity-85 transition-opacity"
+                        onClick={() => window.open(p.startsWith('http') ? p : `${import.meta.env.VITE_API_URL?.replace('/api', '') || ''}${p}`, '_blank')}
+                      />
                     ))}
                   </div>
                 </div>

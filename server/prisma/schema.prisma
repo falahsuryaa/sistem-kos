@@ -195,6 +195,7 @@ model Invoice {
   notes           String?
   snapToken       String?
   snapRedirectUrl String?
+  paymentProof    String?
   createdAt       DateTime      @default(now())
   updatedAt       DateTime      @updatedAt
 
