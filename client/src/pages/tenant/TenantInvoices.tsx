@@ -69,7 +69,7 @@ export default function TenantInvoices() {
       </div>
 
       {isLoading ? (
-        <div className="flex items-center justify-center h-48"><Loader2 className="w-6 h-6 animate-spin text-blue-500" /></div>
+        <div className="flex items-center justify-center h-48"><Loader2 className="w-6 h-6 animate-spin text-emerald-500" /></div>
       ) : invoices.length === 0 ? (
         <div className="card p-12 text-center">
           <FileText className="w-12 h-12 mx-auto text-slate-300 dark:text-slate-600 mb-3" />
@@ -105,7 +105,7 @@ export default function TenantInvoices() {
                   </div>
                   <div className="flex items-center gap-3">
                     <div className="text-right">
-                      <p className="text-xl font-bold text-blue-600 dark:text-blue-400">{formatRupiah(Number(inv.totalAmount))}</p>
+                      <p className="text-xl font-bold text-emerald-600 dark:text-emerald-400">{formatRupiah(Number(inv.totalAmount))}</p>
                     </div>
                     {canPay && (
                       <button

@@ -142,7 +142,7 @@ function RoomModal({ room, onClose, facilities }: { room?: Room; onClose: () => 
               <div className="flex flex-wrap gap-2 mt-1">
                 {facilities.map(f => (
                   <button key={f.id} type="button" onClick={() => toggleFacility(f.id)}
-                    className={`flex items-center gap-1.5 px-3 py-1.5 rounded-lg text-sm border transition-all ${selectedFacilities.includes(f.id) ? 'bg-blue-50 dark:bg-blue-900/20 border-blue-300 dark:border-blue-700 text-blue-600 dark:text-blue-400' : 'bg-white dark:bg-slate-800 border-slate-200 dark:border-slate-600 text-slate-600 dark:text-slate-400 hover:border-blue-300'}`}
+                    className={`flex items-center gap-1.5 px-3 py-1.5 rounded-lg text-sm border transition-all ${selectedFacilities.includes(f.id) ? 'bg-emerald-50 dark:bg-emerald-900/20 border-emerald-300 dark:border-emerald-700 text-emerald-600 dark:text-emerald-400' : 'bg-white dark:bg-slate-800 border-slate-200 dark:border-slate-600 text-slate-600 dark:text-slate-400 hover:border-emerald-300'}`}
                   >
                     <span>{f.icon}</span> {f.name}
                   </button>
@@ -237,7 +237,7 @@ export default function AdminRooms() {
       {/* Rooms Grid */}
       {isLoading ? (
         <div className="flex items-center justify-center h-48">
-          <Loader2 className="w-6 h-6 animate-spin text-blue-500" />
+          <Loader2 className="w-6 h-6 animate-spin text-emerald-500" />
         </div>
       ) : rooms.length === 0 ? (
         <div className="card p-12 text-center">
@@ -295,7 +295,7 @@ export default function AdminRooms() {
 
                   <div className="flex items-center justify-between mb-4">
                     <div>
-                      <p className="text-blue-600 dark:text-blue-400 font-bold text-base">{formatRupiah(Number(room.monthlyPrice))}</p>
+                      <p className="text-emerald-600 dark:text-emerald-400 font-bold text-base">{formatRupiah(Number(room.monthlyPrice))}</p>
                       <p className="text-xs text-slate-400">per bulan</p>
                     </div>
                     {room.tenants && room.tenants.length > 0 && (
@@ -355,7 +355,7 @@ export default function AdminRooms() {
                 <div><p className="text-slate-400 text-xs">Status</p><span className={`badge ${STATUS_LABELS[viewRoom.status]?.class}`}>{STATUS_LABELS[viewRoom.status]?.label}</span></div>
                 <div><p className="text-slate-400 text-xs">Lantai</p><p className="font-medium text-slate-900 dark:text-white">{viewRoom.floor}</p></div>
                 <div><p className="text-slate-400 text-xs">Luas</p><p className="font-medium text-slate-900 dark:text-white">{viewRoom.size ? `${viewRoom.size}m²` : '-'}</p></div>
-                <div><p className="text-slate-400 text-xs">Harga/Bulan</p><p className="font-medium text-blue-600">{formatRupiah(Number(viewRoom.monthlyPrice))}</p></div>
+                <div><p className="text-slate-400 text-xs">Harga/Bulan</p><p className="font-medium text-emerald-600">{formatRupiah(Number(viewRoom.monthlyPrice))}</p></div>
                 <div><p className="text-slate-400 text-xs">Kapasitas</p><p className="font-medium text-slate-900 dark:text-white">{viewRoom.capacity} orang</p></div>
               </div>
               {viewRoom.description && <div><p className="text-slate-400 text-xs mb-1">Deskripsi</p><p className="text-sm text-slate-700 dark:text-slate-300">{viewRoom.description}</p></div>}
@@ -364,7 +364,7 @@ export default function AdminRooms() {
                   <p className="text-slate-400 text-xs mb-2">Fasilitas</p>
                   <div className="flex flex-wrap gap-2">
                     {viewRoom.facilities.map(rf => (
-                      <span key={rf.facility.id} className="bg-blue-50 dark:bg-blue-900/20 text-blue-700 dark:text-blue-300 text-xs px-2.5 py-1 rounded-full">
+                      <span key={rf.facility.id} className="bg-emerald-50 dark:bg-emerald-900/20 text-emerald-700 dark:text-emerald-300 text-xs px-2.5 py-1 rounded-full">
                         {rf.facility.icon} {rf.facility.name}
                       </span>
                     ))}

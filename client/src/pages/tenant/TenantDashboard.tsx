@@ -46,7 +46,7 @@ export default function TenantDashboard() {
   if (profileLoading) return (
     <div className="flex items-center justify-center h-64">
       <div className="text-center">
-        <Loader2 className="w-8 h-8 animate-spin text-blue-500 mx-auto mb-2" />
+        <Loader2 className="w-8 h-8 animate-spin text-emerald-500 mx-auto mb-2" />
         <p className="text-slate-500 dark:text-slate-400 text-sm">Memuat data...</p>
       </div>
     </div>
@@ -58,14 +58,14 @@ export default function TenantDashboard() {
   return (
     <div className="space-y-6">
       {/* Welcome */}
-      <div className="card p-6 bg-gradient-to-r from-blue-600 to-blue-700 border-0">
+      <div className="card p-6 bg-gradient-to-r from-emerald-600 to-emerald-700 border-0">
         <div className="flex items-center gap-4">
           <div className="w-14 h-14 rounded-2xl bg-white/20 backdrop-blur-sm flex items-center justify-center">
             <span className="text-2xl font-bold text-white">{profile?.fullName?.charAt(0).toUpperCase()}</span>
           </div>
           <div className="text-white">
             <h1 className="text-xl font-bold">Selamat datang, {profile?.fullName?.split(' ')[0]}! 👋</h1>
-            <p className="text-blue-100 text-sm mt-0.5">
+            <p className="text-emerald-100 text-sm mt-0.5">
               Kamar #{profile?.room?.roomNumber || '-'} — {profile?.room?.name || 'Tidak ada kamar'}
             </p>
           </div>
@@ -75,8 +75,8 @@ export default function TenantDashboard() {
       {/* Quick Stats */}
       <div className="grid grid-cols-2 lg:grid-cols-4 gap-4">
         <div className="card p-4 flex items-center gap-3">
-          <div className="w-10 h-10 rounded-xl bg-blue-100 dark:bg-blue-900/30 flex items-center justify-center">
-            <BedDouble className="w-5 h-5 text-blue-600 dark:text-blue-400" />
+          <div className="w-10 h-10 rounded-xl bg-emerald-100 dark:bg-emerald-900/30 flex items-center justify-center">
+            <BedDouble className="w-5 h-5 text-emerald-600 dark:text-emerald-400" />
           </div>
           <div>
             <p className="text-lg font-bold text-slate-900 dark:text-white">#{profile?.room?.roomNumber || '-'}</p>
@@ -121,7 +121,7 @@ export default function TenantDashboard() {
             <h3 className="font-semibold text-slate-900 dark:text-white flex items-center gap-2">
               <FileText className="w-4 h-4 text-amber-500" /> Tagihan Menunggu
             </h3>
-            <Link to="/tenant/invoices" className="text-xs text-blue-600 dark:text-blue-400 hover:underline flex items-center gap-0.5">
+            <Link to="/tenant/invoices" className="text-xs text-emerald-600 dark:text-emerald-400 hover:underline flex items-center gap-0.5">
               Lihat Semua <ChevronRight className="w-3 h-3" />
             </Link>
           </div>
@@ -134,7 +134,7 @@ export default function TenantDashboard() {
                     <p className="text-xs text-slate-500">{inv.periodMonth}/{inv.periodYear} — Jatuh tempo {new Date(inv.dueDate).toLocaleDateString('id-ID')}</p>
                   </div>
                   <div className="text-right">
-                    <p className="font-semibold text-blue-600 dark:text-blue-400 text-sm">{formatRupiah(Number(inv.totalAmount))}</p>
+                    <p className="font-semibold text-emerald-600 dark:text-emerald-400 text-sm">{formatRupiah(Number(inv.totalAmount))}</p>
                     <span className={`badge text-xs ${inv.status === 'OVERDUE' ? 'badge-red' : 'badge-yellow'}`}>
                       {inv.status === 'OVERDUE' ? 'Terlambat' : 'Menunggu'}
                     </span>
@@ -154,7 +154,7 @@ export default function TenantDashboard() {
         <div className="card">
           <div className="p-4 border-b border-slate-200 dark:border-slate-700">
             <h3 className="font-semibold text-slate-900 dark:text-white flex items-center gap-2">
-              <Megaphone className="w-4 h-4 text-blue-500" /> Pengumuman
+              <Megaphone className="w-4 h-4 text-emerald-500" /> Pengumuman
             </h3>
           </div>
           {announcements && announcements.length > 0 ? (
@@ -181,7 +181,7 @@ export default function TenantDashboard() {
             <h3 className="font-semibold text-slate-900 dark:text-white flex items-center gap-2">
               <MessageSquare className="w-4 h-4 text-violet-500" /> Keluhan Aktif
             </h3>
-            <Link to="/tenant/complaints" className="text-xs text-blue-600 dark:text-blue-400 hover:underline flex items-center gap-0.5">
+            <Link to="/tenant/complaints" className="text-xs text-emerald-600 dark:text-emerald-400 hover:underline flex items-center gap-0.5">
               Lihat Semua <ChevronRight className="w-3 h-3" />
             </Link>
           </div>
@@ -193,7 +193,7 @@ export default function TenantDashboard() {
                     <p className="text-sm font-medium text-slate-900 dark:text-white">{c.title}</p>
                     <p className="text-xs text-slate-500">{c.category} — {new Date(c.createdAt).toLocaleDateString('id-ID')}</p>
                   </div>
-                  <span className={`badge text-xs ${c.status === 'IN_PROGRESS' ? 'badge-blue' : 'badge-yellow'}`}>
+                  <span className={`badge text-xs ${c.status === 'IN_PROGRESS' ? 'badge-emerald' : 'badge-yellow'}`}>
                     {c.status === 'IN_PROGRESS' ? 'Diproses' : 'Menunggu'}
                   </span>
                 </div>

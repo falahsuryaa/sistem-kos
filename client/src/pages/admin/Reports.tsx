@@ -100,7 +100,7 @@ export default function AdminReports() {
       </div>
 
       {isLoading ? (
-        <div className="flex items-center justify-center h-48"><Loader2 className="w-6 h-6 animate-spin text-blue-500" /></div>
+        <div className="flex items-center justify-center h-48"><Loader2 className="w-6 h-6 animate-spin text-emerald-500" /></div>
       ) : (
         <>
           {/* Summary Cards */}
@@ -132,7 +132,7 @@ export default function AdminReports() {
             </div>
             <div className="card p-5">
               <div className="flex items-start justify-between mb-3">
-                <div className="w-11 h-11 rounded-xl bg-blue-600 flex items-center justify-center">
+                <div className="w-11 h-11 rounded-xl bg-emerald-600 flex items-center justify-center">
                   <DollarSign className="w-5 h-5 text-white" />
                 </div>
               </div>

@@ -82,7 +82,7 @@ export default function AdminLayout() {
         {/* Logo */}
         <div className="flex items-center justify-between gap-3 px-4 py-5 border-b border-slate-200 dark:border-slate-700">
           <div className="flex items-center gap-3">
-            <div className="w-10 h-10 rounded-xl bg-gradient-to-br from-blue-500 to-blue-700 flex items-center justify-center flex-shrink-0 shadow-lg">
+            <div className="w-10 h-10 rounded-xl bg-gradient-to-br from-emerald-500 to-emerald-700 flex items-center justify-center flex-shrink-0 shadow-lg">
               <Home className="w-5 h-5 text-white" />
             </div>
             {sidebarOpen && (
@@ -111,14 +111,14 @@ export default function AdminLayout() {
                 onClick={() => setMobileSidebarOpen(false)}
                 className={`flex items-center gap-3 px-3 py-2.5 rounded-lg text-sm font-medium transition-all duration-200 group relative
                   ${active
-                    ? 'bg-blue-50 dark:bg-blue-900/20 text-blue-600 dark:text-blue-400'
+                    ? 'bg-emerald-50 dark:bg-emerald-900/20 text-emerald-600 dark:text-emerald-400'
                     : 'text-slate-600 dark:text-slate-400 hover:bg-slate-100 dark:hover:bg-slate-700 hover:text-slate-900 dark:hover:text-white'
                   }`}
                 title={!sidebarOpen ? item.label : undefined}
               >
-                <item.icon className={`w-5 h-5 flex-shrink-0 ${active ? 'text-blue-600 dark:text-blue-400' : ''}`} />
+                <item.icon className={`w-5 h-5 flex-shrink-0 ${active ? 'text-emerald-600 dark:text-emerald-400' : ''}`} />
                 {sidebarOpen && <span className="truncate">{item.label}</span>}
-                {sidebarOpen && active && <ChevronRight className="w-4 h-4 ml-auto text-blue-500" />}
+                {sidebarOpen && active && <ChevronRight className="w-4 h-4 ml-auto text-emerald-500" />}
                 {!sidebarOpen && (
                   <div className="absolute left-full ml-2 px-2 py-1 bg-slate-900 text-white text-xs rounded opacity-0 group-hover:opacity-100 pointer-events-none whitespace-nowrap z-50">
                     {item.label}
@@ -133,7 +133,7 @@ export default function AdminLayout() {
         <div className="p-3 border-t border-slate-200 dark:border-slate-700">
           {sidebarOpen ? (
             <div className="flex items-center gap-3 p-2 rounded-lg hover:bg-slate-100 dark:hover:bg-slate-700 cursor-pointer">
-              <div className="w-9 h-9 rounded-full bg-gradient-to-br from-blue-500 to-purple-600 flex items-center justify-center text-white font-semibold text-sm flex-shrink-0">
+              <div className="w-9 h-9 rounded-full bg-gradient-to-br from-emerald-500 to-purple-600 flex items-center justify-center text-white font-semibold text-sm flex-shrink-0">
                 {user?.name?.charAt(0).toUpperCase()}
               </div>
               <div className="flex-1 min-w-0">
@@ -228,7 +228,7 @@ export default function AdminLayout() {
             </div>
 
             {/* User avatar */}
-            <div className="w-8 h-8 rounded-full bg-gradient-to-br from-blue-500 to-purple-600 flex items-center justify-center text-white font-semibold text-sm">
+            <div className="w-8 h-8 rounded-full bg-gradient-to-br from-emerald-500 to-purple-600 flex items-center justify-center text-white font-semibold text-sm">
               {user?.name?.charAt(0).toUpperCase()}
             </div>
           </div>

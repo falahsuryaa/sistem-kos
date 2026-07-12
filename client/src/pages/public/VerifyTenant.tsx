@@ -19,7 +19,7 @@ export default function VerifyTenant() {
     return (
       <div className="min-h-screen bg-slate-50 dark:bg-slate-900 flex items-center justify-center p-4">
         <div className="text-center">
-          <Loader2 className="w-10 h-10 animate-spin text-blue-500 mx-auto mb-3" />
+          <Loader2 className="w-10 h-10 animate-spin text-emerald-500 mx-auto mb-3" />
           <p className="text-slate-500 dark:text-slate-400 text-sm font-medium">Memverifikasi kartu identitas digital...</p>
         </div>
       </div>
@@ -51,7 +51,7 @@ export default function VerifyTenant() {
     <div className="min-h-screen bg-slate-50 dark:bg-slate-900 flex items-center justify-center p-4">
       <div className="relative max-w-md w-full bg-white dark:bg-slate-800 rounded-3xl shadow-2xl border border-slate-100 dark:border-slate-700/50 overflow-hidden">
         {/* Header decoration */}
-        <div className="h-32 bg-gradient-to-r from-blue-600 to-indigo-700 flex flex-col justify-end p-6 relative">
+        <div className="h-32 bg-gradient-to-r from-emerald-600 to-indigo-700 flex flex-col justify-end p-6 relative">
           <div className="absolute top-4 left-4 flex items-center gap-2">
             <div className="w-8 h-8 rounded-lg bg-white/20 backdrop-blur-sm flex items-center justify-center">
               <Home className="w-4.5 h-4.5 text-white" />
@@ -77,7 +77,7 @@ export default function VerifyTenant() {
                 className="w-16 h-16 rounded-2xl object-cover shadow-md border-2 border-white dark:border-slate-800"
               />
             ) : (
-              <div className="w-16 h-16 rounded-2xl bg-gradient-to-br from-blue-500 to-indigo-600 flex items-center justify-center text-white text-xl font-bold shadow-md border-2 border-white dark:border-slate-800">
+              <div className="w-16 h-16 rounded-2xl bg-gradient-to-br from-emerald-500 to-indigo-600 flex items-center justify-center text-white text-xl font-bold shadow-md border-2 border-white dark:border-slate-800">
                 {tenantRes.fullName.charAt(0).toUpperCase()}
               </div>
             )}
@@ -103,7 +103,7 @@ export default function VerifyTenant() {
               </div>
               <div>
                 <p className="text-[10px] text-slate-400 uppercase tracking-wider font-semibold">Nomor Kamar</p>
-                <p className="text-sm font-bold text-blue-600 dark:text-blue-400 mt-0.5">Kamar {tenantRes.roomNumber} ({tenantRes.roomName})</p>
+                <p className="text-sm font-bold text-emerald-600 dark:text-emerald-400 mt-0.5">Kamar {tenantRes.roomNumber} ({tenantRes.roomName})</p>
               </div>
             </div>
 
@@ -144,7 +144,7 @@ export default function VerifyTenant() {
 
           {/* Footer Card info */}
           <div className="p-4 bg-slate-50 dark:bg-slate-900/50 rounded-2xl flex items-center gap-3">
-            <ShieldCheck className="w-5 h-5 text-blue-600 dark:text-blue-400 flex-shrink-0" />
+            <ShieldCheck className="w-5 h-5 text-emerald-600 dark:text-emerald-400 flex-shrink-0" />
             <p className="text-xs text-slate-500 dark:text-slate-400 leading-relaxed">
               Halaman ini adalah bukti resmi verifikasi keanggotaan aktif dari penghuni **Kos Ciparay**.
             </p>

@@ -8,7 +8,7 @@ import toast from 'react-hot-toast';
 
 const STATUS_MAP: Record<string, { label: string; cls: string; icon: React.ElementType }> = {
   PENDING: { label: 'Menunggu', cls: 'badge-yellow', icon: Clock },
-  IN_PROGRESS: { label: 'Diproses', cls: 'badge-blue', icon: Settings },
+  IN_PROGRESS: { label: 'Diproses', cls: 'badge-emerald', icon: Settings },
   RESOLVED: { label: 'Selesai', cls: 'badge-green', icon: CheckCircle },
   CLOSED: { label: 'Ditutup', cls: 'badge-gray', icon: XCircle },
 };
@@ -76,7 +76,7 @@ export default function TenantComplaints() {
       </div>
 
       {isLoading ? (
-        <div className="flex items-center justify-center h-48"><Loader2 className="w-6 h-6 animate-spin text-blue-500" /></div>
+        <div className="flex items-center justify-center h-48"><Loader2 className="w-6 h-6 animate-spin text-emerald-500" /></div>
       ) : complaints.length === 0 ? (
         <div className="card p-12 text-center">
           <MessageSquare className="w-12 h-12 mx-auto text-slate-300 dark:text-slate-600 mb-3" />
@@ -95,13 +95,13 @@ export default function TenantComplaints() {
                 <div className="flex items-start gap-4">
                   <div className={`w-10 h-10 rounded-xl flex items-center justify-center flex-shrink-0 ${
                     c.status === 'RESOLVED' ? 'bg-emerald-100 dark:bg-emerald-900/30' :
-                    c.status === 'IN_PROGRESS' ? 'bg-blue-100 dark:bg-blue-900/30' :
+                    c.status === 'IN_PROGRESS' ? 'bg-emerald-100 dark:bg-emerald-900/30' :
                     c.status === 'CLOSED' ? 'bg-slate-100 dark:bg-slate-700' :
                     'bg-amber-100 dark:bg-amber-900/30'
                   }`}>
                     <StIcon className={`w-5 h-5 ${
                       c.status === 'RESOLVED' ? 'text-emerald-600 dark:text-emerald-400' :
-                      c.status === 'IN_PROGRESS' ? 'text-blue-600 dark:text-blue-400' :
+                      c.status === 'IN_PROGRESS' ? 'text-emerald-600 dark:text-emerald-400' :
                       c.status === 'CLOSED' ? 'text-slate-500' :
                       'text-amber-600 dark:text-amber-400'
                     }`} />
@@ -113,13 +113,13 @@ export default function TenantComplaints() {
                     </div>
                     <p className="text-sm text-slate-600 dark:text-slate-400 line-clamp-2">{c.description}</p>
                     <div className="flex items-center gap-3 mt-2 text-xs text-slate-500">
-                      <span className="badge-blue">{CATEGORY_MAP[c.category] || c.category}</span>
+                      <span className="badge-emerald">{CATEGORY_MAP[c.category] || c.category}</span>
                       <span>{new Date(c.createdAt).toLocaleDateString('id-ID')}</span>
                     </div>
                     {c.adminNotes && (
-                      <div className="mt-3 p-3 rounded-lg bg-blue-50 dark:bg-blue-900/20 border border-blue-100 dark:border-blue-800">
-                        <p className="text-xs font-medium text-blue-700 dark:text-blue-300 mb-0.5">Catatan Admin:</p>
-                        <p className="text-sm text-blue-600 dark:text-blue-400">{c.adminNotes}</p>
+                      <div className="mt-3 p-3 rounded-lg bg-emerald-50 dark:bg-emerald-900/20 border border-emerald-100 dark:border-emerald-800">
+                        <p className="text-xs font-medium text-emerald-700 dark:text-emerald-300 mb-0.5">Catatan Admin:</p>
+                        <p className="text-sm text-emerald-600 dark:text-emerald-400">{c.adminNotes}</p>
                       </div>
                     )}
                     {c.resolvedAt && (

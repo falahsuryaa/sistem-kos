@@ -146,7 +146,7 @@ export default function AdminInvoices() {
       </div>
 
       {isLoading ? (
-        <div className="flex items-center justify-center h-48"><Loader2 className="w-6 h-6 animate-spin text-blue-500" /></div>
+        <div className="flex items-center justify-center h-48"><Loader2 className="w-6 h-6 animate-spin text-emerald-500" /></div>
       ) : filtered.length === 0 ? (
         <div className="card p-12 text-center">
           <FileText className="w-12 h-12 mx-auto text-slate-300 dark:text-slate-600 mb-3" />
@@ -166,9 +166,9 @@ export default function AdminInvoices() {
                   <tr key={inv.id}>
                     <td className="font-mono text-xs font-medium">{inv.invoiceNumber}</td>
                     <td className="font-medium">{inv.tenant?.fullName || '-'}</td>
-                    <td><span className="badge-blue">#{inv.room?.roomNumber || '-'}</span></td>
+                    <td><span className="badge-emerald">#{inv.room?.roomNumber || '-'}</span></td>
                     <td className="text-sm">{inv.periodMonth}/{inv.periodYear}</td>
-                    <td className="font-semibold text-blue-600 dark:text-blue-400">{formatRupiah(Number(inv.totalAmount))}</td>
+                    <td className="font-semibold text-emerald-600 dark:text-emerald-400">{formatRupiah(Number(inv.totalAmount))}</td>
                     <td className="text-sm">{new Date(inv.dueDate).toLocaleDateString('id-ID')}</td>
                     <td><span className={`badge ${st.cls}`}><StIcon className="w-3 h-3 mr-1" />{st.label}</span></td>
                     <td>

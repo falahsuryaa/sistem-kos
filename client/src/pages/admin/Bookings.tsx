@@ -14,7 +14,7 @@ const STATUS_MAP: Record<string, { label: string; cls: string; icon: React.Eleme
   APPROVED: { label: 'Disetujui', cls: 'badge-green', icon: CheckCircle },
   REJECTED: { label: 'Ditolak', cls: 'badge-red', icon: XCircle },
   CANCELLED: { label: 'Dibatalkan', cls: 'badge-gray', icon: Ban },
-  COMPLETED: { label: 'Selesai', cls: 'badge-blue', icon: Check },
+  COMPLETED: { label: 'Selesai', cls: 'badge-emerald', icon: Check },
 };
 
 interface Booking {
@@ -96,7 +96,7 @@ export default function AdminBookings() {
 
       {/* Table */}
       {isLoading ? (
-        <div className="flex items-center justify-center h-48"><Loader2 className="w-6 h-6 animate-spin text-blue-500" /></div>
+        <div className="flex items-center justify-center h-48"><Loader2 className="w-6 h-6 animate-spin text-emerald-500" /></div>
       ) : bookings.length === 0 ? (
         <div className="card p-12 text-center">
           <Calendar className="w-12 h-12 mx-auto text-slate-300 dark:text-slate-600 mb-3" />
@@ -125,7 +125,7 @@ export default function AdminBookings() {
                   <tr key={b.id}>
                     <td className="font-medium">{b.fullName}</td>
                     <td className="text-sm">{b.phone}</td>
-                    <td><span className="badge-blue">#{b.room?.roomNumber}</span></td>
+                    <td><span className="badge-emerald">#{b.room?.roomNumber}</span></td>
                     <td className="text-sm">{new Date(b.checkInDate).toLocaleDateString('id-ID')}</td>
                     <td className="text-sm">{b.duration} bulan</td>
                     <td>
@@ -136,7 +136,7 @@ export default function AdminBookings() {
                     </td>
                     <td className="text-sm">{new Date(b.createdAt).toLocaleDateString('id-ID')}</td>
                     <td>
-                      <button onClick={() => openDetail(b)} className="p-1.5 rounded-lg hover:bg-blue-50 dark:hover:bg-blue-900/20 text-blue-500 transition-colors">
+                      <button onClick={() => openDetail(b)} className="p-1.5 rounded-lg hover:bg-emerald-50 dark:hover:bg-emerald-900/20 text-emerald-500 transition-colors">
                         <Eye className="w-4 h-4" />
                       </button>
                     </td>
@@ -183,7 +183,7 @@ export default function AdminBookings() {
                 </div>
                 <div>
                   <p className="text-xs text-slate-500 dark:text-slate-400 mb-1">Harga/Bulan</p>
-                  <p className="font-semibold text-blue-600 dark:text-blue-400">{formatRupiah(Number(detail.room?.monthlyPrice))}</p>
+                  <p className="font-semibold text-emerald-600 dark:text-emerald-400">{formatRupiah(Number(detail.room?.monthlyPrice))}</p>
                 </div>
                 <div>
                   <p className="text-xs text-slate-500 dark:text-slate-400 mb-1">Tanggal Check-in</p>

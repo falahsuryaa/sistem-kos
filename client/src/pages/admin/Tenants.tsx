@@ -71,7 +71,7 @@ export default function AdminTenants() {
       </div>
 
       {isLoading ? (
-        <div className="flex items-center justify-center h-48"><Loader2 className="w-6 h-6 animate-spin text-blue-500" /></div>
+        <div className="flex items-center justify-center h-48"><Loader2 className="w-6 h-6 animate-spin text-emerald-500" /></div>
       ) : tenants.length === 0 ? (
         <div className="card p-12 text-center">
           <Users className="w-12 h-12 mx-auto text-slate-300 dark:text-slate-600 mb-3" />
@@ -95,7 +95,7 @@ export default function AdminTenants() {
                 <tr key={t.id}>
                   <td>
                     <div className="flex items-center gap-3">
-                      <div className="w-9 h-9 rounded-full bg-gradient-to-br from-blue-500 to-purple-600 flex items-center justify-center text-white font-semibold text-sm flex-shrink-0">
+                      <div className="w-9 h-9 rounded-full bg-gradient-to-br from-emerald-500 to-purple-600 flex items-center justify-center text-white font-semibold text-sm flex-shrink-0">
                         {t.fullName.charAt(0)}
                       </div>
                       <div>
@@ -106,7 +106,7 @@ export default function AdminTenants() {
                   </td>
                   <td>
                     {t.room ? (
-                      <span className="badge-blue">Kamar {t.room.roomNumber}</span>
+                      <span className="badge-emerald">Kamar {t.room.roomNumber}</span>
                     ) : (
                       <span className="badge-gray">Belum ada</span>
                     )}
@@ -122,7 +122,7 @@ export default function AdminTenants() {
                   </td>
                   <td>
                     <div className="flex items-center gap-1">
-                      <button onClick={() => { setEditTenant(t); setShowModal(true); }} className="p-1.5 text-slate-400 hover:text-blue-600 hover:bg-blue-50 dark:hover:bg-blue-900/20 rounded-lg transition-all">
+                      <button onClick={() => { setEditTenant(t); setShowModal(true); }} className="p-1.5 text-slate-400 hover:text-emerald-600 hover:bg-emerald-50 dark:hover:bg-emerald-900/20 rounded-lg transition-all">
                         <Edit2 className="w-4 h-4" />
                       </button>
                       <button onClick={() => { if (confirm(`Nonaktifkan ${t.fullName}?`)) deleteMutation.mutate(t.id); }} className="p-1.5 text-slate-400 hover:text-red-500 hover:bg-red-50 dark:hover:bg-red-900/20 rounded-lg transition-all">

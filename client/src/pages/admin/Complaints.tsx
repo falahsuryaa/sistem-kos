@@ -10,7 +10,7 @@ import toast from 'react-hot-toast';
 
 const STATUS_MAP: Record<string, { label: string; cls: string; icon: React.ElementType }> = {
   PENDING: { label: 'Menunggu', cls: 'badge-yellow', icon: Clock },
-  IN_PROGRESS: { label: 'Diproses', cls: 'badge-blue', icon: Settings },
+  IN_PROGRESS: { label: 'Diproses', cls: 'badge-emerald', icon: Settings },
   RESOLVED: { label: 'Selesai', cls: 'badge-green', icon: CheckCircle },
   CLOSED: { label: 'Ditutup', cls: 'badge-gray', icon: XCircle },
 };
@@ -116,7 +116,7 @@ export default function AdminComplaints() {
       {/* Table */}
       {isLoading ? (
         <div className="flex items-center justify-center h-48">
-          <Loader2 className="w-6 h-6 animate-spin text-blue-500" />
+          <Loader2 className="w-6 h-6 animate-spin text-emerald-500" />
         </div>
       ) : filtered.length === 0 ? (
         <div className="card p-12 text-center">
@@ -144,7 +144,7 @@ export default function AdminComplaints() {
                 return (
                   <tr key={c.id}>
                     <td className="font-medium">{c.tenant?.fullName || '-'}</td>
-                    <td><span className="badge-blue">#{c.tenant?.room?.roomNumber || '-'}</span></td>
+                    <td><span className="badge-emerald">#{c.tenant?.room?.roomNumber || '-'}</span></td>
                     <td className="max-w-48 truncate">{c.title}</td>
                     <td className="text-sm">{CATEGORY_MAP[c.category] || c.category}</td>
                     <td>
@@ -155,7 +155,7 @@ export default function AdminComplaints() {
                     </td>
                     <td className="text-sm">{new Date(c.createdAt).toLocaleDateString('id-ID')}</td>
                     <td>
-                      <button onClick={() => openDetail(c)} className="p-1.5 rounded-lg hover:bg-blue-50 dark:hover:bg-blue-900/20 text-blue-500 transition-colors">
+                      <button onClick={() => openDetail(c)} className="p-1.5 rounded-lg hover:bg-emerald-50 dark:hover:bg-emerald-900/20 text-emerald-500 transition-colors">
                         <Eye className="w-4 h-4" />
                       </button>
                     </td>
@@ -188,7 +188,7 @@ export default function AdminComplaints() {
               </div>
               <div>
                 <p className="text-xs text-slate-500 dark:text-slate-400 mb-1">Kategori</p>
-                <span className="badge-blue">{CATEGORY_MAP[detail.category] || detail.category}</span>
+                <span className="badge-emerald">{CATEGORY_MAP[detail.category] || detail.category}</span>
               </div>
               <div>
                 <p className="text-xs text-slate-500 dark:text-slate-400 mb-1">Deskripsi</p>

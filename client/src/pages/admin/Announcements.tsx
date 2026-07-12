@@ -103,7 +103,7 @@ export default function AdminAnnouncements() {
 
       {/* List */}
       {isLoading ? (
-        <div className="flex items-center justify-center h-48"><Loader2 className="w-6 h-6 animate-spin text-blue-500" /></div>
+        <div className="flex items-center justify-center h-48"><Loader2 className="w-6 h-6 animate-spin text-emerald-500" /></div>
       ) : filtered.length === 0 ? (
         <div className="card p-12 text-center">
           <Megaphone className="w-12 h-12 mx-auto text-slate-300 dark:text-slate-600 mb-3" />
@@ -114,14 +114,14 @@ export default function AdminAnnouncements() {
           {filtered.map((a) => (
             <div key={a.id} className="card p-5 hover:shadow-md transition-shadow">
               <div className="flex items-start gap-4">
-                <div className={`w-10 h-10 rounded-xl flex items-center justify-center flex-shrink-0 ${a.isPinned ? 'bg-amber-100 dark:bg-amber-900/30' : 'bg-blue-100 dark:bg-blue-900/30'}`}>
-                  {a.isPinned ? <Pin className="w-5 h-5 text-amber-600 dark:text-amber-400" /> : <Megaphone className="w-5 h-5 text-blue-600 dark:text-blue-400" />}
+                <div className={`w-10 h-10 rounded-xl flex items-center justify-center flex-shrink-0 ${a.isPinned ? 'bg-amber-100 dark:bg-amber-900/30' : 'bg-emerald-100 dark:bg-emerald-900/30'}`}>
+                  {a.isPinned ? <Pin className="w-5 h-5 text-amber-600 dark:text-amber-400" /> : <Megaphone className="w-5 h-5 text-emerald-600 dark:text-emerald-400" />}
                 </div>
                 <div className="flex-1 min-w-0">
                   <div className="flex items-center gap-2 mb-1">
                     <h3 className="font-semibold text-slate-900 dark:text-white">{a.title}</h3>
                     {a.isPinned && <span className="badge-yellow text-xs">Disematkan</span>}
-                    <span className="badge-blue text-xs">{a.category}</span>
+                    <span className="badge-emerald text-xs">{a.category}</span>
                   </div>
                   <p className="text-sm text-slate-600 dark:text-slate-400 line-clamp-2">{a.content}</p>
                   <p className="text-xs text-slate-400 dark:text-slate-500 mt-2">{new Date(a.createdAt).toLocaleString('id-ID')}</p>
@@ -130,7 +130,7 @@ export default function AdminAnnouncements() {
                   <button onClick={() => togglePin(a)} className="p-1.5 rounded-lg hover:bg-amber-50 dark:hover:bg-amber-900/20 text-amber-500 transition-colors" title={a.isPinned ? 'Lepas pin' : 'Pin'}>
                     {a.isPinned ? <PinOff className="w-4 h-4" /> : <Pin className="w-4 h-4" />}
                   </button>
-                  <button onClick={() => openEdit(a)} className="p-1.5 rounded-lg hover:bg-blue-50 dark:hover:bg-blue-900/20 text-blue-500 transition-colors">
+                  <button onClick={() => openEdit(a)} className="p-1.5 rounded-lg hover:bg-emerald-50 dark:hover:bg-emerald-900/20 text-emerald-500 transition-colors">
                     <Edit2 className="w-4 h-4" />
                   </button>
                   <button onClick={() => handleDelete(a.id)} className="p-1.5 rounded-lg hover:bg-red-50 dark:hover:bg-red-900/20 text-red-500 transition-colors">

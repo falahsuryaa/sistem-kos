@@ -12,7 +12,7 @@ const formatRupiah = (val: number) => `Rp ${Number(val).toLocaleString('id-ID')}
 const CATEGORY_MAP: Record<string, { label: string; icon: React.ElementType; color: string }> = {
   ELECTRICITY: { label: 'Listrik', icon: Zap, color: 'bg-yellow-100 dark:bg-yellow-900/30 text-yellow-600 dark:text-yellow-400' },
   WATER: { label: 'Air', icon: Droplets, color: 'bg-cyan-100 dark:bg-cyan-900/30 text-cyan-600 dark:text-cyan-400' },
-  INTERNET: { label: 'Internet', icon: Wifi, color: 'bg-blue-100 dark:bg-blue-900/30 text-blue-600 dark:text-blue-400' },
+  INTERNET: { label: 'Internet', icon: Wifi, color: 'bg-emerald-100 dark:bg-emerald-900/30 text-emerald-600 dark:text-emerald-400' },
   MAINTENANCE: { label: 'Perawatan', icon: Wrench, color: 'bg-orange-100 dark:bg-orange-900/30 text-orange-600 dark:text-orange-400' },
   CLEANING: { label: 'Kebersihan', icon: Sparkles, color: 'bg-green-100 dark:bg-green-900/30 text-green-600 dark:text-green-400' },
   SALARY: { label: 'Gaji', icon: Wallet, color: 'bg-purple-100 dark:bg-purple-900/30 text-purple-600 dark:text-purple-400' },
@@ -114,7 +114,7 @@ export default function AdminExpenses() {
 
       {/* Table */}
       {isLoading ? (
-        <div className="flex items-center justify-center h-48"><Loader2 className="w-6 h-6 animate-spin text-blue-500" /></div>
+        <div className="flex items-center justify-center h-48"><Loader2 className="w-6 h-6 animate-spin text-emerald-500" /></div>
       ) : filtered.length === 0 ? (
         <div className="card p-12 text-center">
           <Receipt className="w-12 h-12 mx-auto text-slate-300 dark:text-slate-600 mb-3" />
@@ -151,7 +151,7 @@ export default function AdminExpenses() {
                     <td className="font-semibold text-red-500">{formatRupiah(Number(exp.amount))}</td>
                     <td>
                       <div className="flex gap-1">
-                        <button onClick={() => openEdit(exp)} className="p-1.5 rounded-lg hover:bg-blue-50 dark:hover:bg-blue-900/20 text-blue-500 transition-colors">
+                        <button onClick={() => openEdit(exp)} className="p-1.5 rounded-lg hover:bg-emerald-50 dark:hover:bg-emerald-900/20 text-emerald-500 transition-colors">
                           <Edit2 className="w-4 h-4" />
                         </button>
                         <button onClick={() => handleDelete(exp.id)} className="p-1.5 rounded-lg hover:bg-red-50 dark:hover:bg-red-900/20 text-red-500 transition-colors">

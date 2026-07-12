@@ -30,7 +30,7 @@ export default function TenantProfile() {
 
   if (isLoading) return (
     <div className="flex items-center justify-center h-64">
-      <Loader2 className="w-8 h-8 animate-spin text-blue-500" />
+      <Loader2 className="w-8 h-8 animate-spin text-emerald-500" />
     </div>
   );
 
@@ -44,7 +44,7 @@ export default function TenantProfile() {
       {/* Profile Card */}
       <div className="card p-6">
         <div className="flex items-center gap-4 mb-6">
-          <div className="w-16 h-16 rounded-2xl bg-gradient-to-br from-blue-500 to-purple-600 flex items-center justify-center text-white text-2xl font-bold shadow-lg">
+          <div className="w-16 h-16 rounded-2xl bg-gradient-to-br from-emerald-500 to-purple-600 flex items-center justify-center text-white text-2xl font-bold shadow-lg">
             {profile?.fullName?.charAt(0).toUpperCase()}
           </div>
           <div>
@@ -86,7 +86,7 @@ export default function TenantProfile() {
       {profile?.qrCode && (
         <div className="card p-6 text-center">
           <h3 className="font-semibold text-slate-900 dark:text-white mb-3 flex items-center justify-center gap-2">
-            <QrCode className="w-5 h-5 text-blue-500" /> QR Code Penghuni
+            <QrCode className="w-5 h-5 text-emerald-500" /> QR Code Penghuni
           </h3>
           <img src={profile.qrCode} alt="QR Code" className="mx-auto w-48 h-48 rounded-lg border border-slate-200 dark:border-slate-700" />
           <p className="text-xs text-slate-500 dark:text-slate-400 mt-2">Gunakan QR code ini untuk identifikasi dan check-in</p>
@@ -112,7 +112,7 @@ export default function TenantProfile() {
             </div>
             <div>
               <p className="text-xs text-slate-500 dark:text-slate-400">Harga/Bulan</p>
-              <p className="font-semibold text-blue-600 dark:text-blue-400">Rp {Number(profile.room.monthlyPrice).toLocaleString('id-ID')}</p>
+              <p className="font-semibold text-emerald-600 dark:text-emerald-400">Rp {Number(profile.room.monthlyPrice).toLocaleString('id-ID')}</p>
             </div>
             {profile.room.size && (
               <div>

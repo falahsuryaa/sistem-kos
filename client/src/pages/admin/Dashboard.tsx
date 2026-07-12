@@ -103,7 +103,7 @@ export default function AdminDashboard() {
   if (statsLoading) return (
     <div className="flex items-center justify-center h-64">
       <div className="text-center">
-        <Loader2 className="w-8 h-8 animate-spin text-blue-500 mx-auto mb-2" />
+        <Loader2 className="w-8 h-8 animate-spin text-emerald-500 mx-auto mb-2" />
         <p className="text-slate-500 dark:text-slate-400 text-sm">Memuat data dashboard...</p>
       </div>
     </div>
@@ -128,7 +128,7 @@ export default function AdminDashboard() {
 
       {/* Stats Grid */}
       <div className="grid grid-cols-2 lg:grid-cols-4 gap-4">
-        <StatCard title="Total Kamar" value={stats?.rooms?.total || 0} subtitle={`${stats?.rooms?.occupied || 0} terisi, ${stats?.rooms?.available || 0} kosong`} icon={BedDouble} color="bg-blue-600" />
+        <StatCard title="Total Kamar" value={stats?.rooms?.total || 0} subtitle={`${stats?.rooms?.occupied || 0} terisi, ${stats?.rooms?.available || 0} kosong`} icon={BedDouble} color="bg-emerald-600" />
         <StatCard title="Total Penyewa" value={stats?.tenants?.total || 0} subtitle={`+${stats?.tenants?.newThisMonth || 0} bulan ini`} icon={Users} color="bg-violet-600" trend={stats?.tenants?.newThisMonth > 0 ? 5 : 0} />
         <StatCard title="Pendapatan Bulan Ini" value={formatK(stats?.revenue?.thisMonth || 0)} prefix="Rp" icon={TrendingUp} color="bg-emerald-600" trend={stats?.revenue?.growth} />
         <StatCard title="Tagihan Menunggu" value={stats?.invoices?.pending || 0} subtitle={`${stats?.invoices?.overdue || 0} terlambat`} icon={AlertCircle} color="bg-amber-500" />
@@ -144,13 +144,13 @@ export default function AdminDashboard() {
             const tenantName = room?.tenants?.[0]?.fullName || 'Kosong';
             
             return (
-              <div key={code} className={`card p-5 border-l-4 ${isOccupied ? 'border-l-blue-500' : 'border-l-emerald-500'} flex flex-col justify-between h-36`}>
+              <div key={code} className={`card p-5 border-l-4 ${isOccupied ? 'border-l-emerald-500' : 'border-l-emerald-500'} flex flex-col justify-between h-36`}>
                 <div className="flex items-start justify-between">
                   <div>
                     <h4 className="font-bold text-lg text-slate-900 dark:text-white">Kamar {code}</h4>
                     <p className="text-xs text-slate-500 mt-0.5">Lantai {room?.floor || 1} · {room?.size || 3.5} m²</p>
                   </div>
-                  <span className={`badge ${isOccupied ? 'badge-blue' : 'badge-green'}`}>
+                  <span className={`badge ${isOccupied ? 'badge-emerald' : 'badge-green'}`}>
                     {isOccupied ? 'Terisi' : 'Tersedia'}
                   </span>
                 </div>
@@ -254,7 +254,7 @@ export default function AdminDashboard() {
                 <div key={idx} className="flex items-start gap-3 p-3 rounded-lg hover:bg-slate-50 dark:hover:bg-slate-700/50 transition-colors">
                   <div className={`w-8 h-8 rounded-full flex items-center justify-center text-sm flex-shrink-0
                     ${activity.type === 'PAYMENT' ? 'bg-emerald-100 dark:bg-emerald-900/30' :
-                      activity.type === 'NEW_TENANT' ? 'bg-blue-100 dark:bg-blue-900/30' :
+                      activity.type === 'NEW_TENANT' ? 'bg-emerald-100 dark:bg-emerald-900/30' :
                       'bg-amber-100 dark:bg-amber-900/30'}`}
                   >
                     {activity.type === 'PAYMENT' ? '💰' : activity.type === 'NEW_TENANT' ? '👤' : '⚠️'}
@@ -297,7 +297,7 @@ export default function AdminDashboard() {
                     </p>
                   </div>
                   <div className="text-right">
-                    <p className="text-sm font-bold text-blue-600 dark:text-blue-400">{formatRupiah(Number(inv.totalAmount))}</p>
+                    <p className="text-sm font-bold text-emerald-600 dark:text-emerald-400">{formatRupiah(Number(inv.totalAmount))}</p>
                     <span className="inline-block mt-1 text-[10px] font-medium px-2 py-0.5 rounded-full bg-amber-50 dark:bg-amber-900/20 text-amber-600 dark:text-amber-400">
                       Menunggu
                     </span>
