@@ -47,7 +47,7 @@ export default function TenantComplaints() {
         }
       }
       const { data } = await api.post('/complaints', formData, {
-        headers: { 'Content-Type': undefined },
+        headers: { 'Content-Type': 'multipart/form-data' },
       });
       return data;
     },

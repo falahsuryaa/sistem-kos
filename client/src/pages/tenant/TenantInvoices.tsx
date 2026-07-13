@@ -66,7 +66,7 @@ export default function TenantInvoices() {
       const formData = new FormData();
       formData.append('paymentProof', file);
       const { data } = await api.post(`/invoices/${id}/upload-proof`, formData, {
-        headers: { 'Content-Type': undefined },
+        headers: { 'Content-Type': 'multipart/form-data' },
       });
       return data;
     },

@@ -60,8 +60,8 @@ function RoomModal({ room, onClose, facilities }: { room?: Room; onClose: () => 
 
   const mutation = useMutation({
     mutationFn: async (data: FormData) => {
-      if (room) return api.put(`/rooms/${room.id}`, data, { headers: { 'Content-Type': undefined } });
-      return api.post('/rooms', data, { headers: { 'Content-Type': undefined } });
+      if (room) return api.put(`/rooms/${room.id}`, data, { headers: { 'Content-Type': 'multipart/form-data' } });
+      return api.post('/rooms', data, { headers: { 'Content-Type': 'multipart/form-data' } });
     },
     onSuccess: () => {
       qc.invalidateQueries({ queryKey: ['rooms'] });
