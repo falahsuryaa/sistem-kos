@@ -65,7 +65,9 @@ export default function TenantInvoices() {
     mutationFn: async ({ id, file }: { id: string; file: File }) => {
       const formData = new FormData();
       formData.append('paymentProof', file);
-      const { data } = await api.post(`/invoices/${id}/upload-proof`, formData);
+      const { data } = await api.post(`/invoices/${id}/upload-proof`, formData, {
+        headers: { 'Content-Type': undefined },
+      });
       return data;
     },
     onSuccess: (res) => {
