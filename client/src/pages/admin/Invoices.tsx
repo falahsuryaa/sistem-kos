@@ -296,7 +296,7 @@ export default function AdminInvoices() {
               <p>Nominal: <span className="font-semibold text-emerald-600 dark:text-emerald-450">{formatRupiah(Number(viewingInvoice.totalAmount))}</span></p>
             </div>
             <div className="max-h-[50vh] overflow-auto bg-slate-50 dark:bg-slate-900 rounded-2xl p-2 flex items-center justify-center border border-slate-200 dark:border-slate-800">
-              <img src={viewingInvoice.paymentProof} alt="Bukti Pembayaran" className="max-w-full max-h-[45vh] object-contain rounded-lg shadow-sm" />
+              <img src={viewingInvoice.paymentProof.startsWith('http') ? viewingInvoice.paymentProof : `${import.meta.env.VITE_API_URL?.replace('/api', '') || ''}${viewingInvoice.paymentProof}`} alt="Bukti Pembayaran" className="max-w-full max-h-[45vh] object-contain rounded-lg shadow-sm" />
             </div>
             <div className="flex justify-end gap-3 mt-4 pt-3 border-t border-slate-200 dark:border-slate-700">
               <button onClick={() => setViewingInvoice(null)} className="btn-secondary">Tutup</button>

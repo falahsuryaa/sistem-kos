@@ -65,9 +65,7 @@ export default function TenantInvoices() {
     mutationFn: async ({ id, file }: { id: string; file: File }) => {
       const formData = new FormData();
       formData.append('paymentProof', file);
-      const { data } = await api.post(`/invoices/${id}/upload-proof`, formData, {
-        headers: { 'Content-Type': 'multipart/form-data' },
-      });
+      const { data } = await api.post(`/invoices/${id}/upload-proof`, formData);
       return data;
     },
     onSuccess: (res) => {
@@ -131,7 +129,7 @@ export default function TenantInvoices() {
                     {inv.paymentProof && (
                       <div className="mt-2 text-xs">
                         <a
-                          href={inv.paymentProof}
+                          href={inv.paymentProof.startsWith('http') ? inv.paymentProof : `${import.meta.env.VITE_API_URL?.replace('/api', '') || ''}${inv.paymentProof}`}
                           target="_blank"
                           rel="noopener noreferrer"
                           className="text-emerald-600 dark:text-emerald-400 hover:underline font-semibold inline-flex items-center gap-1.5"
@@ -140,7 +138,7 @@ export default function TenantInvoices() {
                         </a>
                       </div>
                     )}
-                    {inv.status === 'PAID' && (
+                    {(inv.status === 'PAID' || inv.paymentProof) && (
                       <div className="mt-2 text-xs">
                         <a
                           href={`${import.meta.env.VITE_API_URL}/invoices/${inv.id}/pdf?token=${localStorage.getItem('accessToken')}`}

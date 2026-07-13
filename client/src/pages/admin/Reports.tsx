@@ -37,16 +37,11 @@ export default function AdminReports() {
     },
   });
 
-  const exportPDF = async () => {
-    try {
-      const params = new URLSearchParams({ year: String(year) });
-      if (month) params.set('month', String(month));
-      const response = await api.get(`/reports/export/pdf?${params}`, { responseType: 'blob' });
-      const url = window.URL.createObjectURL(new Blob([response.data]));
-      const a = document.createElement('a'); a.href = url; a.download = `laporan-${year}${month ? '-' + month : ''}.txt`;
-      document.body.appendChild(a); a.click(); a.remove(); window.URL.revokeObjectURL(url);
-      toast.success('Laporan berhasil diunduh');
-    } catch { toast.error('Gagal mengunduh laporan'); }
+  const exportPDF = () => {
+    const params = new URLSearchParams({ year: String(year) });
+    if (month) params.set('month', String(month));
+    const token = localStorage.getItem('accessToken');
+    window.open(`${import.meta.env.VITE_API_URL}/reports/export/pdf?${params}&token=${token}`, '_blank');
   };
 
   const exportExcel = async () => {

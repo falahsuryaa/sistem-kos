@@ -67,7 +67,7 @@ export default function TenantPayments() {
                       <p className="text-xs text-slate-500 mt-0.5">Metode: {p.paymentType}</p>
                     )}
                     <p className="text-xs text-slate-400 mt-0.5">{new Date(p.createdAt).toLocaleString('id-ID')}</p>
-                    {p.status === 'SETTLEMENT' && p.invoice && (
+                    {(p.status === 'SETTLEMENT' || p.status === 'PENDING') && p.invoice && (
                       <div className="mt-2 text-xs">
                         <a
                           href={`${import.meta.env.VITE_API_URL}/invoices/${p.invoice.id}/pdf?token=${localStorage.getItem('accessToken')}`}

@@ -15,7 +15,6 @@ const navItems = [
   { path: '/admin/tenants', label: 'Penyewa', icon: Users },
   { path: '/admin/invoices', label: 'Tagihan', icon: FileText },
   { path: '/admin/payments', label: 'Pembayaran', icon: CreditCard },
-  { path: '/admin/expenses', label: 'Pengeluaran', icon: Receipt },
   { path: '/admin/complaints', label: 'Keluhan', icon: MessageSquare },
   { path: '/admin/announcements', label: 'Pengumuman', icon: Megaphone },
   { path: '/admin/bookings', label: 'Booking', icon: Calendar },

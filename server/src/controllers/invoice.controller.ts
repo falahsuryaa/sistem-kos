@@ -139,6 +139,48 @@ export const updateInvoice = async (req: Request, res: Response): Promise<void> 
       },
     });
 
+    if (status === 'PAID') {
+      // Find all PENDING payments for this invoice
+      const pendingPayments = await prisma.payment.findMany({
+        where: {
+          invoiceId: req.params.id as string,
+          status: 'PENDING',
+        }
+      });
+
+      for (const p of pendingPayments) {
+        await prisma.payment.update({
+          where: { id: p.id },
+          data: {
+            status: 'SETTLEMENT',
+            paidAt: new Date(),
+          }
+        });
+      }
+
+      // Check if there is ANY settlement payment. If not, create one to reflect manual/direct payment
+      const hasSettlement = await prisma.payment.findFirst({
+        where: {
+          invoiceId: req.params.id as string,
+          status: 'SETTLEMENT',
+        }
+      });
+
+      if (!hasSettlement) {
+        const orderId = `MANUAL-${invoice.invoiceNumber}-${Math.round(Math.random() * 1000)}`;
+        await prisma.payment.create({
+          data: {
+            invoiceId: req.params.id as string,
+            orderId,
+            amount: totalAmount,
+            status: 'SETTLEMENT',
+            paymentType: 'CASH_OR_DIRECT',
+            paidAt: new Date(),
+          }
+        });
+      }
+    }
+
     res.json({ success: true, message: 'Invoice berhasil diperbarui', data: updated });
   } catch (err) {
     res.status(500).json({ success: false, message: 'Server error' });
@@ -207,6 +249,22 @@ export const generateInvoicePDF = async (req: Request, res: Response): Promise<v
     });
     if (!invoice) { res.status(404).json({ success: false, message: 'Invoice tidak ditemukan' }); return; }
 
+    let badgeText = 'Belum Dibayar';
+    let badgeStyle = 'background: #fef3c7; color: #92400e;';
+    if (invoice.status === 'PAID') {
+      badgeText = 'Lunas / Paid';
+      badgeStyle = 'background: #d1fae5; color: #065f46;';
+    } else if (invoice.status === 'OVERDUE') {
+      badgeText = 'Terlambat / Overdue';
+      badgeStyle = 'background: #fee2e2; color: #991b1b;';
+    } else if (invoice.paymentProof) {
+      badgeText = 'Menunggu Konfirmasi';
+      badgeStyle = 'background: #dbeafe; color: #1e40af;';
+    } else if (invoice.status === 'CANCELLED' || invoice.status === 'EXPIRED') {
+      badgeText = 'Batal / Kadaluarsa';
+      badgeStyle = 'background: #f1f5f9; color: #475569;';
+    }
+
     const htmlContent = `<!DOCTYPE html>
 <html>
 <head>
@@ -219,7 +277,7 @@ export const generateInvoicePDF = async (req: Request, res: Response): Promise<v
     .header { text-align: center; border-bottom: 2px dashed #e2e8f0; padding-bottom: 24px; margin-bottom: 24px; position: relative; }
     .logo { font-size: 24px; font-weight: 800; color: #059669; margin: 0 0 4px 0; letter-spacing: -0.5px; }
     .title { font-size: 13px; text-transform: uppercase; letter-spacing: 0.05em; color: #64748b; font-weight: 700; margin: 0; }
-    .badge { display: inline-block; padding: 6px 16px; background: #d1fae5; color: #065f46; border-radius: 9999px; font-size: 12px; font-weight: 700; text-transform: uppercase; margin-top: 12px; }
+    .badge { display: inline-block; padding: 6px 16px; border-radius: 9999px; font-size: 12px; font-weight: 700; text-transform: uppercase; margin-top: 12px; }
     .grid { display: grid; grid-template-cols: 1fr 1fr; gap: 16px; font-size: 14px; line-height: 1.6; margin-bottom: 28px; padding: 12px 0; }
     .col-left { text-align: left; }
     .col-right { text-align: right; }
@@ -245,9 +303,9 @@ export const generateInvoicePDF = async (req: Request, res: Response): Promise<v
 <body>
   <div class="receipt">
     <div class="header">
-      <h1 class="logo">KOS CIKAWUNG</h1>
+      <h1 class="logo">KOS CIPARAY</h1>
       <p class="title">Nota Bukti Pembayaran Resmi</p>
-      <div class="badge">Lunas / Paid</div>
+      <div class="badge" style="${badgeStyle}">${badgeText}</div>
     </div>
 
     <div class="grid">
@@ -362,6 +420,33 @@ export const uploadPaymentProof = async (req: AuthRequest, res: Response): Promi
         paymentProof: paymentProofUrl,
       },
     });
+
+    // Create or update a manual Payment record for this upload so it shows in payment history
+    const orderId = `MANUAL-${invoice.invoiceNumber}`;
+    const existingPayment = await prisma.payment.findFirst({
+      where: { invoiceId: id, orderId }
+    });
+
+    if (existingPayment) {
+      await prisma.payment.update({
+        where: { id: existingPayment.id },
+        data: {
+          amount: invoice.totalAmount,
+          status: 'PENDING',
+          paymentType: 'MANUAL_TRANSFER',
+        }
+      });
+    } else {
+      await prisma.payment.create({
+        data: {
+          invoiceId: id,
+          orderId,
+          amount: invoice.totalAmount,
+          status: 'PENDING',
+          paymentType: 'MANUAL_TRANSFER',
+        }
+      });
+    }
 
     res.json({
       success: true,

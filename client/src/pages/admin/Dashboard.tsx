@@ -173,11 +173,9 @@ export default function AdminDashboard() {
       </div>
 
       {/* Second Row Stats */}
-      <div className="grid grid-cols-2 lg:grid-cols-4 gap-4">
+      <div className="grid grid-cols-2 gap-4">
         <StatCard title="Tingkat Hunian" value={`${stats?.occupancyRate || 0}%`} icon={Percent} color="bg-cyan-600" />
         <StatCard title="Pendapatan Tahun Ini" value={formatK(stats?.revenue?.thisYear || 0)} prefix="Rp" icon={TrendingUp} color="bg-teal-600" />
-        <StatCard title="Pengeluaran Bulan Ini" value={formatK(stats?.expenses?.thisMonth || 0)} prefix="Rp" icon={TrendingDown} color="bg-rose-500" />
-        <StatCard title="Laba Bersih" value={formatK((stats?.revenue?.thisMonth || 0) - (stats?.expenses?.thisMonth || 0))} prefix="Rp" icon={CreditCard} color="bg-indigo-600" />
       </div>
 
       {/* Charts */}
@@ -186,7 +184,7 @@ export default function AdminDashboard() {
         <div className="card p-5 lg:col-span-2">
           <div className="flex items-center justify-between mb-4">
             <div>
-              <h3 className="font-semibold text-slate-900 dark:text-white">Grafik Pendapatan & Pengeluaran</h3>
+              <h3 className="font-semibold text-slate-900 dark:text-white">Grafik Pendapatan</h3>
               <p className="text-xs text-slate-500 dark:text-slate-400 mt-0.5">Tahun {new Date().getFullYear()}</p>
             </div>
           </div>
@@ -197,17 +195,12 @@ export default function AdminDashboard() {
                   <stop offset="5%" stopColor="#2563EB" stopOpacity={0.3} />
                   <stop offset="95%" stopColor="#2563EB" stopOpacity={0} />
                 </linearGradient>
-                <linearGradient id="expenseGrad" x1="0" y1="0" x2="0" y2="1">
-                  <stop offset="5%" stopColor="#EF4444" stopOpacity={0.3} />
-                  <stop offset="95%" stopColor="#EF4444" stopOpacity={0} />
-                </linearGradient>
               </defs>
               <CartesianGrid strokeDasharray="3 3" stroke="#E2E8F0" opacity={0.5} />
               <XAxis dataKey="month" tick={{ fontSize: 11 }} tickLine={false} axisLine={false} />
               <YAxis tickFormatter={formatK} tick={{ fontSize: 11 }} tickLine={false} axisLine={false} />
               <Tooltip formatter={(v: any) => [formatRupiah(Number(v))]} contentStyle={{ background: '#1E293B', border: 'none', borderRadius: '8px', color: '#F1F5F9' }} />
               <Area type="monotone" dataKey="revenue" name="Pendapatan" stroke="#2563EB" strokeWidth={2} fill="url(#revenueGrad)" />
-              <Area type="monotone" dataKey="expenses" name="Pengeluaran" stroke="#EF4444" strokeWidth={2} fill="url(#expenseGrad)" />
             </AreaChart>
           </ResponsiveContainer>
         </div>
