@@ -1,6 +1,6 @@
 import { useQuery } from '@tanstack/react-query';
 import {
-  BedDouble, Users, TrendingUp, TrendingDown, CreditCard,
+  BedDouble, Users, TrendingUp,
   AlertCircle, Percent, RefreshCw, Loader2, ArrowUpRight, ArrowDownRight, Home, CheckCircle
 } from 'lucide-react';
 import { AreaChart, Area, XAxis, YAxis, CartesianGrid, Tooltip, ResponsiveContainer, PieChart, Pie, Cell } from 'recharts';

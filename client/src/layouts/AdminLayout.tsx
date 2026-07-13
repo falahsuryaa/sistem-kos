@@ -2,7 +2,7 @@ import { useState, useEffect } from 'react';
 import { Outlet, useLocation, useNavigate, Link } from 'react-router-dom';
 import {
   LayoutDashboard, BedDouble, Users, FileText, CreditCard,
-  MessageSquare, Megaphone, BarChart3, Receipt, Calendar,
+  MessageSquare, Megaphone, BarChart3, Calendar,
   Moon, Sun, Bell, LogOut, Menu, X, ChevronRight, Home
 } from 'lucide-react';
 import { useAuthStore } from '../store/authStore';
